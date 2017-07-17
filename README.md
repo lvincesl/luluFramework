@@ -1,35 +1,34 @@
 # LuluFramework
 > Additional information or tagline
 
-A brief description of your project, what it is used for and how does life get
-awesome when someone starts to use it.
+The LuluFramework is another PHP Framework developped first for enterprise purpose. It 
 
 ## Library structure
 
 Luluframework
-|   |-- Application.php
-|   |-- Client
-|   |   |-- Ressource
-|   |   |-- View
-|   |   |   |-- Agenda.php
-|   |   |   |-- Breadcrumb.php
-|   |   |   |-- Filter.php
-|   |   |   |-- Form
-|   |   |   |-- Form.php
-|   |   |   |-- MenuBar.php
-|   |   |   |-- Table
-|   |   |   |   |-- Pager.php
-|   |   |   |   `-- Row.php
-|   |   |   `-- Table.php
-|   |   `-- View.php
-|   `-- Server
-|       |-- Controller.php
-|       |-- Log.php
-|       |-- Model.php
-|       |-- Router.php
-|       |-- Session
-|       |   `-- User.php
-|       `-- Session.php
+    +-- Application.php
+    +-- Client
+    |   +-- Ressource
+    |   +-- View
+    |   |   +-- Agenda.php
+    |   |   +-- Breadcrumb.php
+    |   |   +-- Filter.php
+    |   |   +-- Form
+    |   |   +-- Form.php
+    |   |   +-- MenuBar.php
+    |   |   +-- Table
+    |   |   |   +-- Pager.php
+    |   |   |   +-- Row.php
+    |   |   +-- Table.php
+    |   +-- View.php
+    +-- Server
+        +-- Controller.php
+        +-- Log.php
+        +-- Model.php
+        +-- Router.php
+        +-- Session
+        |   +-- User.php
+        --- Session.php
 
 ## Installing / Getting started
 
