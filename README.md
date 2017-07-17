@@ -1,38 +1,17 @@
 # LuluFramework
-> Additional information or tagline
+> Another PHP Framework for 
 
-The LuluFramework is another PHP Framework developped first for enterprise purpose. It 
+The LuluFramework is another PHP Framework created first for Intranet usage.
 
-## Library structure
+## Table of Contents
 
-```
- Luluframework
- ├── Application.php
- ├── Client
- │   ├── Ressource
- │   ├── View
- │   │   ├── Agenda.php
- │   │   ├── Breadcrumb.php
- │   │   ├── Filter.php
- │   │   ├── Form
- │   │   ├── Form.php
- │   │   ├── MenuBar.php
- │   │   ├── Table
- │   │   │   ├── Pager.php
- │   │   │   └── Row.php
- │   │   └── Table.php
- │   └── View.php
- └── Server
-     ├── Controller.php
-     ├── Log.php
-     ├── Model.php
-     ├── Router.php
-     ├── Session
-     │   └── User.php
-     └── Session.php
-```
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+- [Licensing](#Licensing)
 
-## Installing / Getting started
+## Installation
 
 Install the framework using composer.
 
@@ -40,36 +19,7 @@ Install the framework using composer.
 composer require lvincesl/luluframework
 ```
 
-Here you should say what actually happens when you execute the code above.
-
-## Developing
-
-Here's a brief intro about what a developer must do in order to start developing
-the project further:
-
-```shell
-git clone https://github.com/your/awesome-project.git
-cd awesome-project/
-packagemanager install
-```
-
-And state what happens step-by-step.
-
-### Building
-
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here:
-
-```shell
-./configure
-make
-make install
-```
-
-Here again you should state what actually happens when the code above gets
-executed.
-
-### Deploying / Publishing
+## Usage
 
 In case there's some step you have to take that publishes this project to a
 server, this is the right time to state it.
@@ -86,29 +36,6 @@ What's all the bells and whistles this project can perform?
 * What's the main functionality
 * You can also do another thing
 * If you get really randy, you can even do this
-
-## Configuration
-
-Here you should write what are all of the configurations a user can enter when
-using the project.
-
-#### Argument 1
-Type: `String`  
-Default: `'default value'`
-
-State what an argument does and how you can use it. If needed, you can provide
-an example below.
-
-Example:
-```bash
-awesome-project "Some other value"  # Prints "You're nailing this readme!"
-```
-
-#### Argument 2
-Type: `Number|Boolean`  
-Default: 100
-
-Copy-paste as many of these as you need.
 
 ## Contributing
 
