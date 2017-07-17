@@ -1,4 +1,14 @@
 {
+    "name": "lvincesl/luluframework",
+    "description": "Another PHP Framework",
+    "type": "library",
+    "license": "CECILL",
+    "authors": [
+        {
+            "name": "Lionel Vinceslas",
+            "email": "lionel.vinceslas@laposte.net"
+        }
+    ],
     "require": {
         "klein/klein": "^2.1",
         "monolog/monolog": "^1.23"
