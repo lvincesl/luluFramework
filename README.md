@@ -30,12 +30,11 @@ The LuluFramework is another PHP Framework developped first for enterprise purpo
      ├── Session
      │   └── User.php
      └── Session.php
-`
+```
 
 ## Installing / Getting started
 
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
+Install the framework using composer.
 
 ```shell
 composer require lvincesl/luluframework
