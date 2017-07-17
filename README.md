@@ -6,31 +6,31 @@ The LuluFramework is another PHP Framework developped first for enterprise purpo
 ## Library structure
 
 ```
-Luluframework
-|   |-- Application.php
-|   |-- Client
-|   |   |-- Ressource
-|   |   |-- View
-|   |   |   |-- Agenda.php
-|   |   |   |-- Breadcrumb.php
-|   |   |   |-- Filter.php
-|   |   |   |-- Form
-|   |   |   |-- Form.php
-|   |   |   |-- MenuBar.php
-|   |   |   |-- Table
-|   |   |   |   |-- Pager.php
-|   |   |   |   `-- Row.php
-|   |   |   `-- Table.php
-|   |   `-- View.php
-|   +-- Server
-|       |-- Controller.php
-|       |-- Log.php
-|       |-- Model.php
-|       |-- Router.php
-|       |-- Session
-|       |   `-- User.php
-|       `-- Session.php
-```
+ Luluframework
+ ├── Application.php
+ ├── Client
+ │   ├── Ressource
+ │   ├── View
+ │   │   ├── Agenda.php
+ │   │   ├── Breadcrumb.php
+ │   │   ├── Filter.php
+ │   │   ├── Form
+ │   │   ├── Form.php
+ │   │   ├── MenuBar.php
+ │   │   ├── Table
+ │   │   │   ├── Pager.php
+ │   │   │   └── Row.php
+ │   │   └── Table.php
+ │   └── View.php
+ └── Server
+     ├── Controller.php
+     ├── Log.php
+     ├── Model.php
+     ├── Router.php
+     ├── Session
+     │   └── User.php
+     └── Session.php
+`
 
 ## Installing / Getting started
 
