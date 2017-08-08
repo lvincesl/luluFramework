@@ -43,6 +43,24 @@ class BreadcrumbTest extends \PHPUnit\Framework\TestCase
         $b->add();
     }
 
+    public function testAddWithBadValue1()
+    {
+        $b = new \Luluframework\Client\View\Breadcrumb();
+        $this->assertEquals(false, $b->add(12));
+    }
+
+    public function testAddWithBadValue2()
+    {
+        $b = new \Luluframework\Client\View\Breadcrumb();
+        $this->assertEquals(false, $b->add("Page 1", 12));
+    }
+
+    public function testAddWithGoodValue()
+    {
+        $b = new \Luluframework\Client\View\Breadcrumb();
+        $this->assertEquals(true, $b->add("Page 1", "/page1"));
+    }
+
     public function testHtml()
     {
         $b = new \Luluframework\Client\View\Breadcrumb();

@@ -60,6 +60,7 @@ class Breadcrumb
 			return false;
 		} else {
 			$this->breadcrumb_array[$text] = $link;
+			return true;
 		}
 	}
 
