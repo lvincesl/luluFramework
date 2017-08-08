@@ -1,5 +1,5 @@
 # LuluFramework
-> Another PHP Framework for 
+> Another PHP Framework
 
 The LuluFramework is another PHP Framework created first for Intranet usage.
 
