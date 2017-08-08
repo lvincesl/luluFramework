@@ -22,6 +22,7 @@ class Row {
 	protected $class_names;
 	protected $cells_class;
 
+
 	
 	public function __construct($id, $cols) {
 		$this->row = array();

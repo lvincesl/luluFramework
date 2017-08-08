@@ -64,7 +64,10 @@ class ListGroup
      */
     public function html()
     {
-        $source = "";
-        return $source;
+        $source = "<ul class='list-group'>";
+        foreach ($this->items as $item) {
+            $source .= "<li class='list-group-item'>$item</li>";
+        }
+        return "$source</ul>";
     }
 }
