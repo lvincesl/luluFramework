@@ -33,7 +33,7 @@ class Application
 
 
 	public static function get_authentication_panel() {
-		return vf_site::$authentication_panel;
+		return self::$authentication_panel;
 	}
 	
 	public static function routing($routes_map_file=null) {
@@ -85,11 +85,11 @@ class Application
 	 * @return bool
 	 */
 	public static function session_stop() {
-		$log = new Logger('vf_site::session_stop()');
+		$log = new Logger('self::session_stop()');
 		$log->pushHandler(new StreamHandler('log/pem.log', Logger::DEBUG));				
 		$log->info("User logged out", array('username' => $_SESSION['user_name'], 'role' => $_SESSION['user_role']));
 		session_unset();
-		vf_site::set_message('success', "<i class='fa fa-check' aria-hidden='true'></i>&nbsp; Fin de session.");
+		self::set_message('success', "<i class='fa fa-check' aria-hidden='true'></i>&nbsp; Fin de session.");
 		return true;
 	}
 
@@ -100,7 +100,7 @@ class Application
 	 * @return void
 	 */
 	public static function set_view($html_path) {
-		vf_site::$view = new lvincesl\html\Html_template($html_path);
+		self::$view = new lvincesl\html\Html_template($html_path);
 	}
 
 	/**
@@ -111,7 +111,7 @@ class Application
 	 * @return void
 	 */
 	public static function update_view($tag, $value) {
-		vf_site::$view->set($tag, $value);
+		self::$view->set($tag, $value);
 	}
 
 	/**
@@ -122,12 +122,12 @@ class Application
 	 * @return void
 	 */
 	public static function breadcrumb_add($name, $link = null) {
-		if (!is_object(vf_site::$breadcrumb)) vf_site::$breadcrumb = new vf_breadcrumb();
-		vf_site::$breadcrumb->add_Item($name, $link);
+		if (!is_object(self::$breadcrumb)) self::$breadcrumb = new vf_breadcrumb();
+		self::$breadcrumb->add_Item($name, $link);
 	} 
 
 	public static function set_config($config_file) {
-		vf_site::$config = parse_ini_file($config_file);
+		self::$config = parse_ini_file($config_file);
 	}
 
 	/**
@@ -136,14 +136,14 @@ class Application
 	 * @return void
 	 */
 	public static function start() {
-		vf_site::$model = null;
-		if (!is_object(vf_site::$breadcrumb)) vf_site::$breadcrumb = new vf_breadcrumb();
-		vf_site::update_view('PAGE_CONTENT'      	 , $GLOBALS['response']->getBody());
-		vf_site::update_view('BREADCRUMB'            , vf_site::$breadcrumb->get_Html());
-		vf_site::update_view('ATTACHED_CSS'          , vf_site::get_attached_css());
-		vf_site::update_view('ATTACHED_JS'           , vf_site::get_attached_js());
-		vf_site::update_view('ATTACHED_ONLOAD_SCRIPT', vf_site::get_attached_onload_script());
-		vf_site::update_view('DOCUMENT_ROOT'         , vf_site::$document_root);
+		self::$model = null;
+		if (!is_object(self::$breadcrumb)) self::$breadcrumb = new vf_breadcrumb();
+		self::update_view('PAGE_CONTENT'      	 , $GLOBALS['response']->getBody());
+		self::update_view('BREADCRUMB'            , self::$breadcrumb->get_Html());
+		self::update_view('ATTACHED_CSS'          , self::get_attached_css());
+		self::update_view('ATTACHED_JS'           , self::get_attached_js());
+		self::update_view('ATTACHED_ONLOAD_SCRIPT', self::get_attached_onload_script());
+		self::update_view('DOCUMENT_ROOT'         , self::$document_root);
 
 		// emit the response
 		foreach ($GLOBALS['response']->getHeaders() as $name => $values) {
@@ -151,7 +151,7 @@ class Application
 				header(sprintf('%s: %s', $name, $value), false);
 			}
 		}
-		vf_site::$view->show();
+		self::$view->show();
 	}
 
 	/**
@@ -167,8 +167,8 @@ class Application
 		try {
 		    $strConnection = "mysql:host=$db_host;dbname=$db_name";
 		    $arrExtraParam= array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-		    vf_site::$model = new PDO($strConnection, $db_user, $db_password, $arrExtraParam);
-		    vf_site::$model->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    self::$model = new PDO($strConnection, $db_user, $db_password, $arrExtraParam);
+		    self::$model->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch(PDOException $e) {
 		    $msg = 'ERREUR PDO dans ' . $e->getFile() . ' L.' . $e->getLine() . ' : ' . $e->getMessage();
@@ -177,11 +177,11 @@ class Application
 	}
 
 	public static function set_document_root($value) {
-		vf_site::$document_root = $value;
+		self::$document_root = $value;
 	}
 
 	public static function get_document_root() {
-		return vf_site::$document_root;
+		return self::$document_root;
 	}
 
 	/**
@@ -289,10 +289,10 @@ class Application
 		elseif (isset($_POST[$filter_id])) {
 			if ($_POST[$filter_id] == '*') $_POST[$filter_id] = null;
 			if ($type == "dropdown") {
-				vf_site::update_filter_value($filter_id, $_POST[$filter_id]);
+				self::update_filter_value($filter_id, $_POST[$filter_id]);
 			}
 			elseif ($type == "datepicker") {
-				vf_site::update_filter_value($filter_id, $_POST[$filter_id]!=''?vf_site::get_mysql_date($_POST[$filter_id]):null);
+				self::update_filter_value($filter_id, $_POST[$filter_id]!=''?self::get_mysql_date($_POST[$filter_id]):null);
 			}
 		}
 	}
@@ -312,7 +312,7 @@ class Application
 			
 			if ($_SESSION['filters'][$value]['type'] == 'dropdown') {
 				if (is_string($_SESSION['filters'][$value]['data'])) {
-					$data = vf_site::$model->query($_SESSION['filters'][$value]['data'])->fetchAll();
+					$data = self::$model->query($_SESSION['filters'][$value]['data'])->fetchAll();
 				}
 				elseif (is_array($_SESSION['filters'][$value]['data'])) {
 					$data = $_SESSION['filters'][$value]['data'];
@@ -331,8 +331,8 @@ class Application
 								okCancelInMulti: true,
 								selectAll: true
 								});";
-					vf_site::attach_css(vf_site::get_document_root().'bower_components/sumoselect/sumoselect.css');
-					vf_site::attach_js(vf_site::get_document_root().'bower_components/sumoselect/jquery.sumoselect.min.js');
+					self::attach_css(self::get_document_root().'bower_components/sumoselect/sumoselect.css');
+					self::attach_js(self::get_document_root().'bower_components/sumoselect/jquery.sumoselect.min.js');
 				}
 				elseif ($style == 'select2') {
 					$script = "$('#$value').select2({
@@ -341,15 +341,15 @@ class Application
 								dropdownAutoWidth: true,
 								allowClear: true
 								});";
-					vf_site::attach_css(vf_site::get_document_root().'bower_components/select2/dist/css/select2.min.css');
-					vf_site::attach_js(vf_site::get_document_root().'bower_components/select2/dist/js/select2.min.js');
-					vf_site::attach_js(vf_site::get_document_root().'bower_components/select2/dist/js/i18n/fr.js');
+					self::attach_css(self::get_document_root().'bower_components/select2/dist/css/select2.min.css');
+					self::attach_js(self::get_document_root().'bower_components/select2/dist/js/select2.min.js');
+					self::attach_js(self::get_document_root().'bower_components/select2/dist/js/i18n/fr.js');
 				}
-				$actionLink = "onchange='$.redirect(\"".vf_site::get_url()."\",{ $value: (($(\"#$value\").val()==\"\")?\"*\":$(\"#$value\").val())});'";
+				$actionLink = "onchange='$.redirect(\"".self::get_url()."\",{ $value: (($(\"#$value\").val()==\"\")?\"*\":$(\"#$value\").val())});'";
 				if (isset($_POST[$value])) $_SESSION['filters'][$value]['value'] = $_POST[$value];
 				$default_value = (is_array($_SESSION['filters'][$value]['value'])?$_SESSION['filters'][$value]['value']:explode(",", $_SESSION['filters'][$value]['value']));
 
-				vf_site::attach_onload_script($script);
+				self::attach_onload_script($script);
 				$filters_dropdown .= "<div class='input-group' data-toggle='tooltip' title=\"".$_SESSION['filters'][$value]['placeholder']."\"><select name=\"$value\" id=\"$value\" multiple $actionLink>";
 
 				foreach ($data as $row) {
@@ -358,7 +358,7 @@ class Application
 				$filters_dropdown .= '</select></div>';
 			}
 			elseif ($_SESSION['filters'][$value]['type'] == 'datepicker') {
-				$actionLink = "onchange='$.redirect(\"".vf_site::get_url()."\",{".$value.": (($(\"#$value\").val()==\"\")?\"*\":$(\"#$value\").val())})'";
+				$actionLink = "onchange='$.redirect(\"".self::get_url()."\",{".$value.": (($(\"#$value\").val()==\"\")?\"*\":$(\"#$value\").val())})'";
 				$defaultDate = $_SESSION['filters'][$value]['value'];
 				$filters_datepicker .= "
 				<div class='input-group'>
@@ -433,7 +433,7 @@ class Application
 	public static function get_combo_box($name, $default_value, $placeholder=null, $tooltip=null, $data_source=null) {
 		
 		if (is_string($data_source)) {
-			$data = vf_site::$model->query($data_source)->fetchAll();
+			$data = self::$model->query($data_source)->fetchAll();
 		}
 		elseif (is_array($data_source)) {
 			$data = $data_source;
@@ -448,7 +448,7 @@ class Application
 			$combo_box .="<option value='".$item['id']."' ".(isset($item['tooltip'])?"title='".$item['tooltip']."'":null)." ".(($default_value==$item['id'])?"selected":"").">".$item['value']."</option>\n";
 		}
 
-		vf_site::attach_onload_script("$(\"#$name\").select2({\n
+		self::attach_onload_script("$(\"#$name\").select2({\n
 														placeholder: \"$placeholder\",\n
 														width: '100%',\n
 														dropdownAutoWidth: true,\n
@@ -469,27 +469,27 @@ class Application
 	}
 	
 	public static function attach_css($css_src) {
-		vf_site::$css .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_src\">\n";
+		self::$css .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_src\">\n";
 	}
 
 	public static function get_attached_css() {
-		return vf_site::$css;
+		return self::$css;
 	}
 
 	public static function attach_js($js_src) {
-		vf_site::$js .= "<script src=\"$js_src\"></script>\n";
+		self::$js .= "<script src=\"$js_src\"></script>\n";
 	}
 
 	public static function get_attached_js() {
-		return vf_site::$js;
+		return self::$js;
 	}
 
 	public static function attach_onload_script($script) {
-		vf_site::$onload_script .= "$script\n";
+		self::$onload_script .= "$script\n";
 	}
 
 	public static function get_attached_onload_script() {
-		$html = "<script>\n$(document).ready(function(){\n".vf_site::$onload_script."});\n</script>";
+		$html = "<script>\n$(document).ready(function(){\n".self::$onload_script."});\n</script>";
 		return $html;
 	}
 }
