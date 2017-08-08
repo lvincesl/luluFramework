@@ -1,5 +1,6 @@
 <?php
 
+use \Luluframework\Client\View\ListGroup;
 
 class ListGroupTest extends \PHPUnit\Framework\TestCase
 {
@@ -7,22 +8,20 @@ class ListGroupTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(\PHPUnit\Framework\Error\Error::class);
 
-        $listgroup = new \Luluframework\Client\View\ListGroup();
+        $listgroup = new ListGroup();
         $listgroup->add();
     }
     
     public function testAddWithItem()
     {
 
-        $listgroup = new \Luluframework\Client\View\ListGroup();
+        $listgroup = new ListGroup();
         $this->assertEquals(true, $listgroup->add("Item test"));
     }
 
-
     public function testGet()
     {
-
-        $l = new \Luluframework\Client\View\ListGroup();
+        $l = new ListGroup();
         $this->assertInternalType('array', $l->get());
     }
 
@@ -30,28 +29,37 @@ class ListGroupTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(\PHPUnit\Framework\Error\Error::class);
 
-        $l = new \Luluframework\Client\View\ListGroup();
+        $l = new ListGroup();
         $l->set();
     }
 
     public function testSetWithGoodValue()
     {
-
-        $l = new \Luluframework\Client\View\ListGroup();
+        $l = new ListGroup();
         $this->assertEquals(true, $l->set(array(1, 2, 3)));
     }
 
     public function testSetWithBadValue()
     {
-
-        $l = new \Luluframework\Client\View\ListGroup();
+        $l = new ListGroup();
         $this->assertEquals(false, $l->set(12));
     }
 
     public function testHtml()
     {
-        $l = new \Luluframework\Client\View\ListGroup();
+        $l = new ListGroup();
         $this->assertInternalType('string', $l->html());
     }
 
+    public function testHtmlWithGoodValue()
+    {
+        $l = new ListGroup();
+        $this->assertInternalType('string', $l->html(ListGroup::HYPERLINK_LISTGROUP));
+    }
+
+    public function testHtmlWithBadValue()
+    {
+        $l = new ListGroup();
+        $this->assertEquals(false, $l->html(3));
+    }
 }
