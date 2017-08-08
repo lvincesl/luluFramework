@@ -18,45 +18,40 @@ class ListGroupTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(true, $listgroup->add("Item test"));
     }
 
-    public function testGetItems()
+
+    public function testGet()
     {
 
-        $listgroup = new \Luluframework\Client\View\ListGroup();
-        $this->assertInternalType('array', $listgroup->getItems());
+        $l = new \Luluframework\Client\View\ListGroup();
+        $this->assertInternalType('array', $l->get());
     }
 
-    public function testSetItemsWithoutItems()
+    public function testSetWithoutValue()
     {
         $this->expectException(\PHPUnit\Framework\Error\Error::class);
 
-        $listgroup = new \Luluframework\Client\View\ListGroup();
-        $listgroup->setItems();
-        $this->assertInternalType('array', $listgroup->getItems());
+        $l = new \Luluframework\Client\View\ListGroup();
+        $l->set();
     }
 
-    public function testSetItemsWithGoodItems()
+    public function testSetWithGoodValue()
     {
 
-        $listgroup = new \Luluframework\Client\View\ListGroup();
-        $array = array(1, 2, 3);
-        $listgroup->setItems($array);
-        $this->assertInternalType('array', $listgroup->getItems());
+        $l = new \Luluframework\Client\View\ListGroup();
+        $this->assertEquals(true, $l->set(array(1, 2, 3)));
     }
 
-    public function testSetItemsWithBadItems()
+    public function testSetWithBadValue()
     {
 
-        $listgroup = new \Luluframework\Client\View\ListGroup();
-        
-        $this->assertEquals(true, $listgroup->setItems(12));
+        $l = new \Luluframework\Client\View\ListGroup();
+        $this->assertEquals(false, $l->set(12));
     }
 
-    public function testGetItemsAfterSetItemsWithBadItems()
+    public function testHtml()
     {
-
-        $listgroup = new \Luluframework\Client\View\ListGroup();
-        $listgroup->setItems(array(1, 2, 3));
-        $this->assertInternalType('array', $listgroup->getItems());
+        $l = new \Luluframework\Client\View\ListGroup();
+        $this->assertInternalType('string', $l->html());
     }
 
 }

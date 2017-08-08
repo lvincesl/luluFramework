@@ -13,24 +13,11 @@ class ListGroup
     }
 
     /**
-     * Add item to listgroup
-     *
-     * @param string $item
-     * @param string $class
-     * @return void
-     */
-    public function add($item, $class=null)
-    {
-        array_push($this->items, array("item" => $item, "class" => $class));
-        return true;
-    }
-
-    /**
-     * Return listgroup items
+     * Get listgroup items
      *
      * @return array
      */
-    public function getItems()
+    public function get()
     {
         return $this->items;
     }
@@ -38,13 +25,36 @@ class ListGroup
     /**
      * Set listgroup items
      *
-     * @param string $items
+     * @param array $array
      * @return boolean
      */
-    public function setItems($array)
+    public function set($array)
     {
-        $this->items = $array;
-        return true;
+        if (!is_array($array)) {
+            return false;
+        } else {
+            $this->items = $array;
+            return true;
+        }
+    }
+
+    /**
+     * Add item to listgroup
+     *
+     * @param string $item
+     * @param string $class
+     * @return boolean
+     */
+    public function add($item, $class=null)
+    {
+        if (!\is_string($item)) {
+            return false;
+        } elseif (!is_null($class) && !is_string($class)) {
+            return false;
+        } else {
+            array_push($this->items, array("item" => $item, "class" => $class));
+            return true;
+        }
     }
 
     /**
@@ -52,7 +62,7 @@ class ListGroup
      *
      * @return string
      */
-    public function getHtml()
+    public function html()
     {
         $source = "";
         return $source;
