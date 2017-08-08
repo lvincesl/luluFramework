@@ -66,7 +66,7 @@ class ListGroup
     {
         $source = "<ul class='list-group'>";
         foreach ($this->items as $item) {
-            $source .= "<li class='list-group-item $item{class}>$item{item}</li>";
+            $source .= "<li class='list-group-item {$item['class']}'>{$item['item']}</li>";
         }
         return "$source</ul>";
     }
