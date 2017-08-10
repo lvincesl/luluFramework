@@ -5,203 +5,327 @@ use Luluframework\Client\View\Table\Row;
 
 class Table
 {
-	protected $table_body;
-	protected $table_header;
-
-	protected $table_class;
-	protected $header_class;
-	protected $body_class;
-
+	protected $body;
+	protected $header;
+	protected $footer;
+	protected $class;
+	protected $headerClass;
+	protected $bodyClass;
+	protected $footerClass;
 	protected $caption;
-	protected $first_line_number;
+	protected $firstLineNumber;
 	protected $checkbox;
-	protected $edit_link;
-	protected $copy_link;
-	protected $delete_link;
-	protected $apply_link;
-	protected $print_link;
-	protected $info_link;
-	protected $collapse;
-	protected $options_enabled;
+	protected $collapsedIndex;
+	protected $hasCheckbox;
+	protected $hasOptions;
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() 
 	{
-		$this->table_body = array();
-		$this->table_header = array();
-		$this->caption = null;
-		$this->first_line_number = null;
-		$this->buttons = array();
-		$this->checkbox = false;
-		$this->edit_link = null;
-		$this->copy_link = null;
-		$this->delete_link = null;
-		$this->apply_link = null;
-		$this->print_link = null;
-		$this->info_link = null;
-		$this->collapse = null;
-		$this->header_class = null;
-		$this->options_enabled = false;
+		$this->body 			= array();
+		$this->header 			= array();
+		$this->footer 			= array();
+		$this->class 			= null;
+		$this->headerClass 		= array();
+		$this->bodyClass 		= null;
+		$this->footerClass 		= array();
+		$this->caption 			= null;
+		$this->firstLineNumber 	= null;
+		$this->collapsedIndex 	= null;
+		$this->hasCheckbox 		= false;
+		$this->hasOptions 		= false;
 	}
 
-	public function add_column($column_name) 
+	/**
+	 * Add a new col
+	 *
+	 * @param string $colHeader
+	 * @return boolean
+	 */
+	public function addCol($colHeader) 
 	{
-		array_push($this->table_head, $column_name);
-		foreach ($this->table_body as $key => $value) {
-			$value->add_cell($column_name);
+		if (!is_string($colHeader)) {
+			return false;
+		} else {
+			array_push($this->header, $colHeader);
+			foreach ($this->body as $row) {
+				$row->addCell(null);
+			}
+			return true;
 		}
 	}
 
-	public function set_caption($value) 
+	/**
+	 * Set table caption
+	 *
+	 * @param string $value
+	 * @return boolean
+	 */
+	public function setCaption($value) 
 	{
-		$this->caption = $value;
+		if (!is_string($value)) {
+			return false;
+		} else {
+			$this->caption = $value;
+			return true;
+		}
 	}
 
-	public function get_caption() 
+	/**
+	 * Get table caption
+	 *
+	 * @return string
+	 */
+	public function getCaption() 
 	{
 		return $this->caption;
 	}
 
-	public function set_header($header) 
+	/**
+	 * Set table header
+	 *
+	 * @param array $header
+	 * @return boolean
+	 */
+	public function setHeader($header) 
 	{
-		if (is_array($header)) {
+		if (!is_array($header)) {
+			return false;
+		} else {
 			$this->clear();
 			foreach ($header as $key => $value) {
-				array_push($this->table_header, $value);
+				array_push($this->header, $value);
 			}
 			return true;
 		}
-		else return false;
-	}
-
-	public function set_header_class($header_name, $class_name) 
-	{
-		$this->header_class[$header_name] = $class_name;
-	}
-
-	public function add_row($id = null, $values = null, $edit_permission=false, $copy_permission=false, $delete_permission=false, $apply_permission=false, $print_permission=false)
-	{
-		if (!is_null($values)) {
-			$row = new Row($id, sizeof($this->table_header));
-			$row->set_cells($values);
-			//$row->set_view_permission($view_permission);
-			$row->set_edit_permission($edit_permission);
-			$row->set_copy_permission($copy_permission);
-			$row->set_delete_permission($delete_permission);
-			$row->set_apply_permission($apply_permission);
-			$row->set_print_permission($print_permission);
-			$row->set_edit_link($this->edit_link);
-			$row->set_copy_link($this->copy_link);
-			$row->set_delete_link($this->delete_link);
-			$row->set_apply_link($this->apply_link);
-			$row->set_print_link($this->print_link);
-			array_push($this->table_body, $row);
-		}
-		else array_push($this->table_body, new vf_table_row($id, sizeof($this->table_header)));
-	}
-
-	public function clear() 
-	{
-		$this->table_body = array();
-		$this->table_header = array();
-	}
-
-	public function set_checkbox($value=false) 
-	{
-		$this->checkbox = $value;
-	}
-
-	public function set_first_line_number($line_number) 
-	{
-		$this->first_line_number = $line_number;
-	}
-
-	public function set_edit_link($link) 
-	{
-		$this->edit_link = $link;
-	}
-
-	public function set_copy_link($link) 
-	{
-		$this->copy_link = $link;
-	}
-
-	public function set_delete_link($link) 
-	{
-		$this->delete_link = $link;
-	}
-
-	public function set_apply_link($link) 
-	{
-		$this->apply_link = $link;
-	}
-	
-	public function set_print_link($link) 
-	{
-		$this->print_link = $link;
-	}
-
-	public function collapse($collumn_index) 
-	{
-		$this->collapse = $collumn_index;
-	}
-
-	public function options_enabled($bool) 
-	{
-		$this->options_enabled = $bool;
-	}
-
-	public function set_table_class($class) 
-	{
-		$this->table_class = $class;
 	}
 
 	/**
-	 * Return the table source code
+	 * Get table header
 	 *
 	 * @return string
 	 */
-	public function getSourceCode() 
+	public function getHeader()
 	{
-		$header = "<thead data-uk-sticky=\"{top:-200, animation: 'uk-animation-slide-top'}\"><tr>".($this->collapse?'<th></th>':null).
-								($this->checkbox?'<th><div class="checkbox"><input type=\'checkbox\'><label></label></div></th>':null).
-								(is_null($this->first_line_number)?null:'<th data-toggle="true" class="uk-table-shrink">#</th>');
+		return $this->header;
+	}
+
+	/**
+	 * Set header class
+	 *
+	 * @param string $colHeader
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function setHeaderClass($colHeader, $class) 
+	{
+		if (!is_string($colHeader)) {
+			return false;
+		} elseif (!is_string($class)) {
+			return false;
+		} else {
+			$this->headerClass[$colHeader] = $class;
+			return true;
+		}
+	}
+
+	/**
+	 * Get header class
+	 *
+	 * @return string
+	 */
+	public function getHeaderClass($colHeader)
+	{
+		if (!is_string($colHeader)) {
+			return false;
+		} else {
+			return $this->headerClass[$colHeader];
+		}
+	}
+
+	/**
+	 * Add a row
+	 *
+	 * @param string $id
+	 * @param array $values
+	 * @return boolean
+	 */
+	public function addRow(Row $row)
+	{
+		array_push($this->body, $row);
+		return true;
+	}
+
+	/**
+	 * Clear table content
+	 *
+	 * @return boolean
+	 */
+	public function clear() 
+	{
+		$this->body 		= array();
+		$this->header 		= array();
+		$this->footer 		= array();
+		$this->headerClass  = array();
+		$this->bodyClass  	= array();
+		$this->footerClass	= array();
+		return true;
+	}
+
+	/**
+	 * Activate rows checkbox
+	 *
+	 * @param boolean $boolean
+	 * @return boolean
+	 */
+	public function hasCheckbox($boolean) 
+	{
+		if (!\is_bool($boolean)) {
+			return false;
+		} else {
+			$this->hasCheckbox = $boolean;
+			return true;
+		}
+	}
+
+	/**
+	 * Set table first line number
+	 *
+	 * @param integer $value
+	 * @return boolean
+	 */
+	public function setFirstLineNumber($value) 
+	{
+		if (!is_integer($value)) {
+			return false;
+		} else {
+			$this->firstLineNumber = $value;
+			return true;
+		}
+	}
+
+	/**
+	 * Get table first line number
+	 *
+	 * @return integer
+	 */
+	public function getFirstLineNumber()
+	{
+		return $this->firstLineNumber;
+	}
+
+	/**
+	 * Set collapsed index
+	 *
+	 * @param integer $index
+	 * @return void
+	 */
+	public function setCollapsedIndex($index) 
+	{
+		if (!is_integer($index)) {
+			return false;
+		} else {
+			$this->collapsedIndex = $index;
+			return true;
+		}
+	}
+
+	/**
+	 * Get collapsed index
+	 *
+	 * @return integer
+	 */
+	public function getCollapsedIndex()
+	{
+		return $this->collapsedIndex;
+	}
+
+	public function hasOptions($boolean) 
+	{
+		if (!\is_bool($boolean)) {
+			return false;
+		} else {
+			$this->hasOptions = $boolean;
+			return true;
+		}
+	}
+
+	/**
+	 * Set table class
+	 *
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function setClass($class) 
+	{
+		if (!is_string($class)) {
+			return false;
+		} else {
+			$this->class = $class;
+			return true;
+		}
+	}
+
+	/**
+	 * Get table class
+	 *
+	 * @return string
+	 */
+	public function getClass()
+	{
+		return $this->class;
+	}
+
+	/**
+	 * Return the table html source code
+	 *
+	 * @return string
+	 */
+	public function html() 
+	{
+		$H = 	"<thead data-uk-sticky=\"{top:-200, animation: 'uk-animation-slide-top'}\">".
+					"<tr>".(is_null($this->collapsedIndex)?null:'<th></th>').
+							($this->hasCheckbox?'<th><div class="checkbox"><input type=\'checkbox\'><label></label></div></th>':null).
+							(is_null($this->firstLineNumber)?null:'<th data-toggle="true" class="uk-table-shrink">#</th>');
 		
-		foreach ($this->table_header as $key => $value) {
-			if (isset($this->header_class[$value])) {
-				$header .= "<th class='".$this->header_class[$value]."'><strong>$value</strong></th>";
+		foreach ($this->header as $key => $value) {
+			if (isset($this->headerClass[$value])) {
+				$H .= "<th class='".$this->headerClass[$value]."'><strong>$value</strong></th>";
 			}
 			else {
-				$header .= "<th><strong>$value</strong></th>";				
+				$H .= "<th><strong>$value</strong></th>";				
 			}
 		}
-		$header .= ($this->options_enabled?"<th class='uk-text-right'>Options</th>":null)."</tr></thead>";
+		$H .= ($this->hasOptions?"<th class='uk-text-right'>Options</th>":null)."</tr></thead>";
 
 		$i 				= 0;
 		$collapse_id  	= 0; 
 		$collapse_val 	= null;
 		$highlight_val 	= null;
-		foreach ($this->table_body as $key => $value) {
-			$value->set_line_number($this->first_line_number+(++$i));
-			$value->set_checkbox($this->checkbox);
-			$value->set_cells_class($this->header_class);
-			if ($this->collapse) {
-				if ($collapse_val != $value->get_col($this->collapse)) {
-					$value->set_collapse_id(++$collapse_id);
-					$collapse_val = $value->get_col($this->collapse);
+		foreach ($this->body as $key => $value) {
+			$value->setLineNumber($this->firstLineNumber+(++$i));
+			$value->hasCheckbox($this->hasCheckbox);
+			$value->setCellsClass($this->headerClass);
+			if (!is_null($this->collapsedIndex)) {
+				if ($collapse_val != $value->getCell($this->collapsedIndex)) {
+					$value->setCollapseId(++$collapse_id);
+					$collapse_val = $value->getCell($this->collapsedIndex);
 				}
 				else {
-					$value->add_class("collapse group$collapse_id");
+					$value->addClass("collapse group$collapse_id");
 				}
 			}
 		}
 
-		$body = "<tbody>";
-		foreach ($this->table_body as $key => $value) {
-			$body .= $value->get_html();
+		$B = "<tbody>";
+		foreach ($this->body as $key => $value) {
+			$B .= $value->html();
 		}
-		$body .= "</tbody>";
+		$B .= "</tbody>";
 
-		return (empty($this->table_body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table class='table table-condensed table-striped table-hover uk-text-small'>".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$header$body</table>");
+		return (empty($this->body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table class='table table-condensed table-striped table-hover uk-text-small'>".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$H$B</table>");
 		//return (empty($this->table_body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table".(strlen($this->table_class)?' class="'.$this->table_class.'"':null).">".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$header$body</table>");
 	}
 	

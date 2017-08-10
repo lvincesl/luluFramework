@@ -1,172 +1,314 @@
 <?php
+
 namespace Luluframework\Client\View\Table;
 
+use \Luluframework\Client\View\Table\Row\Option;
+
 class Row {
-	protected $row;
-	protected $id;
-	protected $line_number;
-	protected $view_permission;
-	protected $edit_permission;
-	protected $copy_permission;
-	protected $delete_permission;
-	protected $apply_permission;
-	protected $print_permission;
-	protected $view_link;
-	protected $edit_link;
-	protected $copy_link;
-	protected $delete_link;
-	protected $apply_link;
-	protected $print_link;
-	protected $checkbox;
-	protected $collapse_id;
-	protected $class_names;
-	protected $cells_class;
+
+	private $id;
+	private $cells;
+	private $options;
+	private $collapseId;
+	private $lineNumber;
+	private $class;
+	private $cellsClass;
+	private $hasCheckbox;
 
 
-	
-	public function __construct($id, $cols) {
-		$this->row = array();
-		array_fill($this->row, $cols, null);
-		$this->id = $id;
-		$this->line_number = null;
-		$this->view_permission = false;
-		$this->edit_permission = false;
-		$this->copy_permission = false;
-		$this->delete_permission = false;
-		$this->apply_permission = false;
-		$this->print_permission = false;
-		$this->view_link = null;
-		$this->edit_link = null;
-		$this->copy_link = null;
-		$this->delete_link = null;
-		$this->apply_link = null;
-		$this->print_link = null;
-		$this->checkbox = false;
-		$this->collapse_id = null;
-		$this->class_names = null;
-		$this->cells_class = null;
+	/**
+	 * Constructor
+	 *
+	 * @param string $id
+	 */
+	public function __construct($id)
+	{
+		if (!is_string($id)) {
+            throw new \Exception("InvalidArgumentException : string expected for 'id' !");
+        } else {
+			$this->id 			= $id;
+			$this->cells 		= array();
+			$this->options 		= array();
+			$this->collapseId 	= null;
+			$this->lineNumber 	= null;
+			$this->class 		= null;
+			$this->cellsClass   = null;
+			$this->hasCheckbox 	= false;
+		}
 	}
 
-	public function add_col($cell_value) {
-		array_push($this->row, $cell_value);
+	/**
+	 * Add a cell to the table row
+	 *
+	 * @param string $value
+	 * @return boolean
+	 */
+	public function addCell($value) 
+	{
+		if (!\is_string($value) && !is_null($value)) {
+			return false;
+		} else {
+			array_push($this->cells, $value);
+			return true;
+		}
 	}
 
-	public function set_view_link($link) {
-		$this->view_link = $link;
+	/**
+	 * Delete a cell
+	 *
+	 * @param integer $index
+	 * @return boolean
+	 */
+	public function delCell($index)
+	{
+		if (!is_integer($index)) {
+			return false;
+		} elseif ($index >= count($this->cells)) {
+			return false;
+		} else {
+			unset($this->cells[$index]);
+			return true;
+		}
 	}
 
-	public function set_edit_link($link) {
-		$this->edit_link = $link;
+	/**
+	 * Get cell value
+	 *
+	 * @param integer $index
+	 * @return string
+	 */
+	public function getCell($index)
+	{
+		if (!is_integer($index)) {
+			return false;
+		} elseif ($index >= count($this->cells)) {
+			return false;
+		} else {
+			return $this->cells[$index];
+		}
 	}
 
-	public function set_copy_link($link) {
-		$this->copy_link = $link;
+	/**
+	 * Set cells values
+	 *
+	 * @param array $values
+	 * @return boolean
+	 */
+	public function setCells($values)
+	{
+		if (!is_array($values)) {
+			return false;
+		} else {
+			$this->row = $values;
+			return true;
+		}
 	}
 
-	public function set_delete_link($link) {
-		$this->delete_link = $link;
+	/**
+	 * Get cells
+	 *
+	 * @return array
+	 */
+	public function getCells()
+	{
+		return $this->cells;
 	}
 
-	public function set_apply_link($link) {
-		$this->apply_link = $link;
-	}
-	
-	public function set_print_link($link) {
-		$this->print_link = $link;
-	}
-
-	public function set_cells($values) {
-		$this->row = $values;
-	}
-
-	public function set_id($id) {
-		$this->id = $id;
-	}
-
-	public function set_line_number($value) {
-		$this->line_number = $value;
+	/**
+	 * Set the row Id
+	 *
+	 * @param mixed $id
+	 * @return boolean
+	 */
+	public function setId($id)
+	{
+		if (!is_string($id) && !is_numeric($id)) {
+			return false;
+		} else {
+			$this->id = $id;
+			return true;
+		}
 	}
 
-	public function set_view_permission($permission) {
-		$this->view_permission = $permission;
+	/**
+	 * Get row Id
+	 *
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->id;
 	}
 
-	public function set_edit_permission($permission) {
-		$this->edit_permission = $permission;
+	/**
+	 * Add an option
+	 *
+	 * @param Option $option
+	 * @return boolean
+	 */
+	public function addOption(Option $option)
+	{
+		array_push($this->options, $option);
+		return true;
 	}
 
-	public function set_copy_permission($permission) {
-		$this->copy_permission = $permission;
+	/**
+	 * Set row line number
+	 *
+	 * @param integer $value
+	 * @return boolean
+	 */
+	public function setLineNumber($value)
+	{
+		if (!is_integer($value)) {
+			return false;
+		} else {
+			$this->lineNumber = $value;
+			return true;
+		}
 	}
 
-	public function set_delete_permission($permission) {
-		$this->delete_permission = $permission;
+	/**
+	 * Get row line number
+	 *
+	 * @return integer
+	 */
+	public function getLineNumber()
+	{
+		return $this->lineNumber;
 	}
 
-	public function set_apply_permission($permission) {
-		$this->apply_permission = $permission;
+	/**
+	 * Activate row checkbox
+	 *
+	 * @param boolean $boolean
+	 * @return boolean
+	 */
+	public function hasCheckbox($boolean)
+	{
+		if (!\is_bool($boolean)) {
+			return false;
+		} else {
+			$this->hasCheckbox = $boolean;
+			return true;
+		}
 	}
 
-	public function set_print_permission($permission) {
-		$this->print_permission = $permission;
+	/**
+	 * Set option class
+	 *
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function setClass($class)
+	{
+		if (!is_string($class)) {
+			return false;
+		} else {
+			$this->class = $class;
+			return true;
+		}
 	}
 
-	public function set_checkbox($value) {
-		$this->checkbox = $value;
+	/**
+	 * Get row class
+	 *
+	 * @return string
+	 */
+	public function getClass()
+	{
+		return $this->class;
 	}
 
-	public function add_class($class_name) {
-		$this->class_names .= "$class_name ";
+	/**
+	 * Set cells class
+	 *
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function setCellsClass($class)
+	{
+		if (!is_string($class)) {
+			return false;
+		} else {
+			$this->cellsClass = $class;
+			return true;
+		}
 	}
 
-	public function get_col($collum_index) {
-		return $this->row[$collum_index];
+	/**
+	 * Get cells class
+	 *
+	 * @return string
+	 */
+	public function getCellsClass()
+	{
+		return $this->cellsClass;
 	}
 
-	public function set_cells_class($array) {
-		$this->cells_class = $array;
+	/**
+	 * Set collapse id
+	 *
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function setCollapseId($id)
+	{
+		if (!is_string($id)) {
+			return false;
+		} else {
+			$this->collapseId = $id;
+			return true;
+		}
 	}
 
-	public function get_html() {
-		$r = "<tr id='row-".$this->id."' ".($this->collapse_id?"data-toggle='collapse' data-target='.group".$this->collapse_id."'":null).
-							($this->class_names?" class='".$this->class_names."'":null).">".
-							($this->collapse_id?"<td><i class='fa fa-plus-square' aria-hidden='true'></i></td>":null).
-							(strstr($this->class_names, 'collapse')!==FALSE?"<td></td>":null).
-							($this->checkbox?'<td><div class=\'checkbox\'><input type=\'checkbox\' id=\'checkbox_'.$this->id.'\' name=\'checkbox_'.$this->id.'\'><label></label></div></td>':null).
-							(is_null($this->line_number)?null:'<th scope="row">'.$this->line_number.'</th>');
+	/**
+	 * Get collapse id
+	 *
+	 * @return string
+	 */
+	public function getCollapseId()
+	{
+		return $this->collapseId;
+	}
+
+	/**
+	 * Return row html source code
+	 *
+	 * @return string
+	 */
+	public function html() 
+	{
+		$r = "<tr id='row-{$this->id}' ".($this->collapseId?"data-toggle='collapse' data-target='.group{$this->collapseId}'":null).
+							($this->class?" class='{$this->class}'":null).">".
+							($this->collapseId?"<td><i class='fa fa-plus-square' aria-hidden='true'></i></td>":null).
+							(strstr($this->class, 'collapse')!==FALSE?"<td></td>":null).
+							($this->hasCheckbox?"<td><div class='checkbox'><input type='checkbox' id='checkbox_{$this->id}' name='checkbox_{$this->id}'><label></label></div></td>":null).
+							(is_null($this->lineNumber)?null:"<th scope='row'>{$this->lineNumber}</th>");
 		
-		foreach ($this->row as $key => $value) {
-			$r .= "<td ".(isset($this->cells_class[$key])?"class='".$this->cells_class[$key]."'":null).">$value</td>";
+		foreach ($this->cells as $key => $value) {
+			$r .= "<td ".(isset($this->cellsClass[$key])?"class='{$this->cellsClass[$key]}'":null).">$value</td>";
 		}
 
-		/* Inserting controls */
+		/* Inserting options */
 		$r .= "<td class='uk-text-right uk-text-nowrap'>";
-		//$r .= ($this->view_permission?"&nbsp;<a href='#'  data-toggle='tooltip' title='Afficher' class='uk-button uk-button-small' role='button' onclick='$.redirect(\"".$this->view_link."\",{ edit: ".$this->id."});'><i class='fa fa-info-circle' aria-hidden='true'></i></a>":null);
-		$r .= ($this->edit_permission?"&nbsp;<a href='#'  data-toggle='tooltip' title='Modifier' class='uk-button uk-button-small' role='button' onclick='$.redirect(\"".$this->edit_link."\",{ edit: ".$this->id."});'><i class='fa fa-pencil' aria-hidden='true'></i></a>":null);
-		$r .= ($this->copy_permission?"&nbsp;<a href='#'  data-toggle='tooltip' title='Dupliquer' class='uk-button uk-button-small' role='button' onclick='$.redirect(\"".$this->copy_link."\",{ copy: ".$this->id."});'><i class='fa fa-clone' aria-hidden='true'></i></a>":null);
-		$r .= ($this->delete_permission?"&nbsp;<a href='#'  data-toggle='tooltip' title='Supprimer' class='uk-button uk-button-danger uk-button-small' role='button' onclick='$.redirect(\"".$this->delete_link."\",{ delete: ".$this->id."});'><i class='fa fa-trash' aria-hidden='true'></i></a>":null);
-		$r .= ($this->apply_permission?"&nbsp;<a href='#'  data-toggle='tooltip' title='Traiter' class='uk-button uk-button-primary uk-button-small' role='button' onclick='$.redirect(\"".$this->apply_link."\",{ apply: ".$this->id."});'><i class='fa fa-check' aria-hidden='true'></i></a>":null);
-		$r .= ($this->print_permission?"&nbsp;<a href='#'  data-toggle='tooltip' title='Imprimer' class='uk-button uk-button-small' role='button' onclick='$.redirect(\"".$this->print_link."\",{ print: ".$this->id."});'><i class='fa fa-print' aria-hidden='true'></i></a>":null);
-		$r .= "</td>";
-		return $r.'</tr>';
+		foreach ($this->options as $option) {
+			$r .= $option->html();
+		}
+
+		return "$r</tr>";
 	}
 
-	public function clear() {
-		$this->row = array();
+	/**
+	 * Delete all cells
+	 *
+	 * @return boolean
+	 */
+	public function clear() 
+	{
+		$this->cells = array();
+		$this->cellsClass = array();
+		$this->options = array();
+		return true;
 	}
-
-	public function delete_cell($cell_pos) {
-		unset($this->row[$cell_pos]);
-	}
-
-	public function set_collapse_id($collapse_id) {
-		$this->collapse_id = $collapse_id;
-	}
-
-	public function highlight($boolean) {
-		$this->highlight = $boolean;
-	}
-
 }
-
-?>
