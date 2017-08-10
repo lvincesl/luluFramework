@@ -14,7 +14,6 @@ class BadgeTest extends \PHPUnit\Framework\TestCase
     public function testSetWithoutValue()
     {
         $this->expectException(\PHPUnit\Framework\Error\Error::class);
-
         $b = new Badge();
         $b->set();
     }
