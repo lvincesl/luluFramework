@@ -305,7 +305,9 @@ class Table
 		$collapse_val 	= null;
 		$highlight_val 	= null;
 		foreach ($this->body as $key => $value) {
-			$value->setLineNumber($this->firstLineNumber+(++$i));
+			if (!is_null($this->firstLineNumber)) {
+				$value->setLineNumber($this->firstLineNumber+(++$i));
+			}
 			$value->hasCheckbox($this->hasCheckbox);
 			$value->setCellsClass($this->headerClass);
 			if (!is_null($this->collapsedIndex)) {
