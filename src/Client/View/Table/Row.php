@@ -99,7 +99,7 @@ class Row {
 		if (!is_array($values)) {
 			return false;
 		} else {
-			$this->row = $values;
+			$this->cells = $values;
 			return true;
 		}
 	}
