@@ -79,27 +79,27 @@ class Option
     {
         switch ($this->type) {
             case self::VIEW:
-                return "<a href='#'  data-toggle='tooltip' title='View' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ view : \"{$this->rowId}\");'><i class='fa fa-info' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='View' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ view : \"{$this->rowId}\"});'><i class='fa fa-info' aria-hidden='true'></i></a>";
                 break;
 
             case self::EDIT:
-                return "<a href='#'  data-toggle='tooltip' title='Edit' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ edit : \"{$this->rowId}\");'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='Edit' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ edit : \"{$this->rowId}\"});'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
                 break;            
 
             case self::DUPLICATE:
-                return "<a href='#'  data-toggle='tooltip' title='Copy/Paste' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ copy : \"{$this->rowId}\");'><i class='fa fa-clone' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='Copy/Paste' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ copy : \"{$this->rowId}\"});'><i class='fa fa-clone' aria-hidden='true'></i></a>";
                 break;
             
             case self::DELETE:
-                return "<a href='#'  data-toggle='tooltip' title='Delete' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ delete : \"{$this->rowId}\");'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='Delete' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ delete : \"{$this->rowId}\"});'><i class='fa fa-trash' aria-hidden='true'></i></a>";
                 break;
             
             case self::PROCESS:
-                return "<a href='#'  data-toggle='tooltip' title='Process' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ process : \"{$this->rowId}\");'><i class='fa fa-check' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='Process' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ process : \"{$this->rowId}\"});'><i class='fa fa-check' aria-hidden='true'></i></a>";
                 break;
             
             case self::PRINT:
-                return "<a href='#'  data-toggle='tooltip' title='Print' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ print : \"{$this->rowId}\");'><i class='fa fa-print' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='Print' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ print : \"{$this->rowId}\"});'><i class='fa fa-print' aria-hidden='true'></i></a>";
                 break;
             
             
