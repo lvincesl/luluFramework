@@ -327,7 +327,7 @@ class Table
 		}
 		$B .= "</tbody>";
 
-		return (empty($this->body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table class='table table-condensed table-striped table-hover uk-text-small'>".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$H$B</table>");
+		return (empty($this->body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table class='table table-condensed table-striped table-hover $class'>".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$H$B</table>");
 		//return (empty($this->table_body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table".(strlen($this->table_class)?' class="'.$this->table_class.'"':null).">".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$header$body</table>");
 	}
 	
