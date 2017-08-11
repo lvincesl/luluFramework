@@ -14,64 +14,88 @@ namespace Luluframework\Client;
  */
 class View
 {
-    private $sourcePath;
-    private $sourceCode;
+    private $path;
+    private $html;
     
-    public function __construct($path)
+    /**
+     * Constructor
+     *
+     * @param string $path
+     */
+    public function __construct($path=null)
     {
-        $this->sourcePath = $path;
-        $this->sourceCode = file_get_contents($path);
+        if (!is_null($path) && !is_string($path)) {
+            throw new Exception('TypeError');
+        } else {
+            $this->path = $path;
+            $this->html = ($path?file_get_contents($path):null);
+        }
     }
 
     /**
-     * Return the view source paths
+     * Set view path
      *
-     * @return void
+     * @param string $path
+     * @return true
      */
-    public function getSourcePath()
+    public function setPath($path)
     {
-        return $this->sourcePath;
-    }
-    
-    /**
-     * Return the view source code
-     *
-     * @return void
-     */
-    public function getSourceCode()
-    {
-        return $this->sourceCode;
+        if (!is_string($path)) {
+            return false;
+        } else {
+            $this->path = $path;
+            $this->html = file_get_contents($path);
+            return true;
+        }
     }
 
     /**
-     * Set the value of a given variable
+     * Get view path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Update variable
      *
      * @param string $variable
      * @param string $value
-     * @return void
+     * @return boolean
      */
-    public function set($variable, $value)
+    public function update($variable, $value = null)
     {
-        $this->sourceCode = str_replace("{%".$name."%}", $value, $this->sourceCode);
+        if (!is_string($variable)) {
+            return false;
+        } elseif (!is_null($value) && !is_string($value)) {
+            return false;
+        } else {
+            $this->html = str_replace("{%$variable%}", $value, $this->html);
+            return true;
+        }
     }
 
     /**
      * Alias of getSourceCode() function
      *
-     * @return void
+     * @return string
      */
-    public function toString()
+    public function html()
     {
-        return $this->sourceCode;
+        return $this->html;
     }
 
     /**
-     * Print the view
+     * Display the view
      *
-     * @return void
+     * @return boolean
      */
-    public function show()
+    public function display()
     {
-        echo $this->sourceCode;
+        echo $this->html;
+        return true;
     }
 }
