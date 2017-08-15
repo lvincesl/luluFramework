@@ -228,7 +228,7 @@ class Row {
 	 */
 	public function setCellsClass($class)
 	{
-		if (!is_string($class)) {
+		if (!is_array($class)) {
 			return false;
 		} else {
 			$this->cellsClass = $class;

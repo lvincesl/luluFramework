@@ -228,7 +228,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
     public function testSetCellsClassWithGoodValue()
     {
         $r = new Row("7");
-        $this->assertEquals(true, $r->setCellsClass("active"));
+        $this->assertEquals(true, $r->setCellsClass(array("test" => "active")));
     }
 
     public function testSetCellsClassWithBadValue()
@@ -242,8 +242,8 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
         $r = new Row("7");
         $this->assertEquals(null, $r->getCellsClass());
 
-        $r->setCellsClass("active");
-        $this->assertInternalType('string', $r->getCellsClass());
+        $r->setCellsClass(array("test" => "active"));
+        $this->assertInternalType('array', $r->getCellsClass());
     }
 
     public function testSetCollapseIdWithoutValue()
