@@ -11,11 +11,13 @@ class Alert
 
     private $value;
     private $type;
+    private $dismiss;
 
     public function __construct($type = Alert::INFO)
     {
-        $this->value = 0;
-        $this->type = $type;
+        $this->value    = 0;
+        $this->type     = $type;
+        $this->dismiss  = false;
     }
 
     /**
@@ -76,6 +78,22 @@ class Alert
     }
 
     /**
+     * Dismiss alert
+     *
+     * @param boolean $boolean
+     * @return boolean
+     */
+    public function dismiss($boolean)
+    {
+        if (!is_bool($boolean)) {
+            return false;
+        } else {
+            $this->dismiss = $boolean;
+            return true;
+        }
+    }
+
+    /**
      * Return the Alert html source code
      *
      * @return string
@@ -104,6 +122,12 @@ class Alert
                 break;
         }
 
-        return "<div class='alert $class'>{$this->value}</div>";
+        if ($this->dismiss) {
+            $dismiss_code = "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+        } else {
+            $dismiss_code = null;
+        }
+
+        return "<div class='alert $class".($this->dismiss?'alert-dismissable':null)."'>$dismiss_code{$this->value}</div>";
     }
 }
