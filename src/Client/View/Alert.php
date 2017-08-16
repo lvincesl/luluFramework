@@ -128,6 +128,6 @@ class Alert
             $dismiss_code = null;
         }
 
-        return "<div class='alert $class".($this->dismiss?'alert-dismissable':null)."'>$dismiss_code{$this->value}</div>";
+        return "<div class='alert $class".($this->dismiss?' alert-dismissable':null)."'>$dismiss_code{$this->value}</div>";
     }
 }
