@@ -4,10 +4,14 @@ namespace Luluframework\Client\View;
 
 class Alert
 {
+    const PRIMARY   = 1;
     const INFO      = 2;
     const SUCCESS   = 3;
     const WARNING   = 4;
     const DANGER    = 5;
+    const SECONDARY = 6;
+    const LIGHT     = 6;
+    const DARK      = 6;
 
     private $value;
     private $type;
