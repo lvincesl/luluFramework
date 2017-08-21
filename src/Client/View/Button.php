@@ -251,7 +251,7 @@ class Button
         }
 
         if (strlen($this->onclick)) {
-            $html .= " onclick=\"#{$this->onclick}\"";
+            $html .= " onclick=\"{$this->onclick}\"";
         }
 
         $html .= ">{$this->text}</button>";
