@@ -254,6 +254,8 @@ class Panel
      */
     public function html()
     {
+        $typeClass = null;
+        
         switch ($this->type) {
             case Panel::DEFAULT:
                 $typeClass = "panel-default";
