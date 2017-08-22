@@ -176,7 +176,7 @@ class Modal
      */
     public function html()
     {
-        $html = "<div class='modal {$this->class}' id='{$this->id}' tabindex='-1' role='dialog'><div class='modal-dialog' role='document'><div class='modal-content'>";
+        $html = "<div class='modal {$this->class}' id='{$this->id}' role='dialog'><div class='modal-dialog' role='document'><div class='modal-content'>";
         
         if (strlen($this->title) || $this->close) {
             $html .= "<div class='modal-header'>".
