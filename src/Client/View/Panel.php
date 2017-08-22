@@ -256,36 +256,36 @@ class Panel
     {
         switch ($this->type) {
             case Panel::DEFAULT:
-                $class = "panel-default";
+                $typeClass = "panel-default";
                 break;
 
             case Panel::PRIMARY:
-                    $class = "panel-primary";
-                    break;
+                $typeClass = "panel-primary";
+                break;
 
             case Panel::INFO:
-                    $class = "panel-info";
-                    break;
+                $typeClass = "panel-info";
+                break;
 
             case Panel::SUCCESS:
-                    $class = "panel-success";
-                    break;
+                $typeClass = "panel-success";
+                break;
 
             case Panel::WARNING:
-                    $class = "panel-warning";
-                    break;
+                $typeClass = "panel-warning";
+                break;
 
             case Panel::DANGER:
-                    $class = "panel-danger";
-                    break;
+                $typeClass = "panel-danger";
+                break;
             
             default:
-                $class = "panel-default";
+                $typeClass = "panel-default";
                 break;
         }
 
         return "\n
-                <div class='panel {$this->class}'>\n
+                <div class='panel $typeClass {$this->class}'>\n
                     <div class='panel-heading {$this->headerClass}'>{$this->header}</div>\n
                     <div class='panel-body {$this->bodyClass}'>{$this->body}</div>\n
                     <div class='panel-footer {$this->footerClass}'>{$this->footer}</div>\n
