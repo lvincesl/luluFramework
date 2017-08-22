@@ -284,10 +284,11 @@ class Panel
                 break;
         }
 
-        return "<div class='panel {$this->class}'>
-                    <div class='panel-heading {$this->headerClass}'>{$this->header}</div>
-                    <div class='panel-body {$this->bodyClass}'>{$this->body}</div>
-                    <div class='panel-footer {$this->footerClass}'>{$this->footer}</div>
-                </div>";
+        return "\n
+                <div class='panel {$this->class}'>\n
+                    <div class='panel-heading {$this->headerClass}'>{$this->header}</div>\n
+                    <div class='panel-body {$this->bodyClass}'>{$this->body}</div>\n
+                    <div class='panel-footer {$this->footerClass}'>{$this->footer}</div>\n
+                </div>\n";
     }
 }
