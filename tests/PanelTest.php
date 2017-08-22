@@ -112,6 +112,118 @@ class PanelTest extends \PHPUnit\Framework\TestCase
         $p = new Panel();
         $this->assertInternalType('integer', $p->getType());
     }
+    
+    public function testSetClassWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $p = new Panel();
+        $p->setClass();
+    }
+
+    public function testSetClassWithGoodValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(true, $p->setClass("Footer"));
+    }
+
+    public function testSetClassWithBadValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(false, $p->setClass(12));
+    }
+
+    public function testGetClass()
+    {
+        $p = new Panel();
+        $this->assertEquals(null, $p->getClass());
+
+        $p->setClass("Footer");
+        $this->assertInternalType('string', $p->getClass());
+    }
+
+    public function testSetHeaderClassWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $p = new Panel();
+        $p->setHeaderClass();
+    }
+
+    public function testSetHeaderClassWithGoodValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(true, $p->setHeaderClass("Titre"));
+    }
+
+    public function testSetHeaderClassWithBadValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(false, $p->setHeaderClass(12));
+    }
+
+    public function testGetHeaderClass()
+    {
+        $p = new Panel();
+        $this->assertEquals(null, $p->getHeaderClass());
+
+        $p->setHeader("Titre");
+        $this->assertInternalType('string', $p->getHeader());
+    }
+
+    public function testSetBodyClassWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $p = new Panel();
+        $p->setBodyClass();
+    }
+
+    public function testSetBodyClassWithGoodValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(true, $p->setBodyClass("Test"));
+    }
+
+    public function testSetBodyClassWithBadValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(false, $p->setBodyClass(12));
+    }
+
+    public function testGetBodyClass()
+    {
+        $p = new Panel();
+        $this->assertEquals(null, $p->getBodyClass());
+
+        $p->setBodyClass("Test");
+        $this->assertInternalType('string', $p->getBodyClass());
+    }
+
+    public function testSetFooterClassWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $p = new Panel();
+        $p->setFooterClass();
+    }
+
+    public function testSetFooterClassWithGoodValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(true, $p->setFooterClass("Footer"));
+    }
+
+    public function testSetFooterClassWithBadValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(false, $p->setFooterClass(12));
+    }
+
+    public function testGetFooterClass()
+    {
+        $p = new Panel();
+        $this->assertEquals(null, $p->getFooterClass());
+
+        $p->setFooterClass("Footer");
+        $this->assertInternalType('string', $p->getFooterClass());
+    }
 
     public function testHtml()
     {
