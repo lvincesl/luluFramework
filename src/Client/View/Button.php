@@ -268,7 +268,7 @@ class Button
                 break;
         }
 
-        $html = "<button type='button' class='btn {$this->class}'";
+        $html = "<button type='button' class='btn {$this->class}'".($this->id?" id='{$this->id}'":null);
         
         if (strlen($this->tooltip)) {
             $html .= " data-toggle='tooltip' title=\"{$this->tooltip}\"";
