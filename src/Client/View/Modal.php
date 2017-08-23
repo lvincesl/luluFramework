@@ -11,7 +11,7 @@ class Modal
     private $footer;
     private $class;
 
-    public function __construct($id)
+    public function __construct($id=null)
     {
         $this->id       = $id;
         $this->close    = false;
