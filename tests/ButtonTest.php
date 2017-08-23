@@ -156,6 +156,34 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $b->getModalId());
     }
 
+    public function testSetIdWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $b = new Button();
+        $b->setId();
+    }
+
+    public function testSetIdWithGoodValue()
+    {
+        $b = new Button();
+        $this->assertEquals(true, $b->setId("test"));
+    }
+
+    public function testSetIdWithBadValue()
+    {
+        $b = new Button();
+        $this->assertEquals(false, $b->setId(7));
+    }
+
+    public function testGetId()
+    {
+        $b = new Button();
+        $this->assertEquals(null, $b->getId());
+
+        $b->setId("test");
+        $this->assertInternalType('string', $b->getId());
+    }
+
     public function testSetOnclickWithoutValue()
     {
         $this->expectException(\PHPUnit\Framework\Error\Error::class);

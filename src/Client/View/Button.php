@@ -18,6 +18,7 @@ class Button
     private $type;
     private $modalId;
     private $onclick;
+    private $id;
 
     public function __construct($text=null)
     {
@@ -30,6 +31,7 @@ class Button
             $this->type     = Button::DEFAULT;
             $this->modalId  = null;
             $this->onclick  = null;
+            $this->id       = null;
         }
     }
 
@@ -150,7 +152,7 @@ class Button
     /**
 	 * Set modal id
 	 *
-	 * @param string $class
+	 * @param string $modalId
 	 * @return boolean
 	 */
 	public function setModalId($modalId) 
@@ -171,6 +173,32 @@ class Button
 	public function getModalId()
 	{
 		return $this->modalId;
+    }
+
+    /**
+	 * Set button id
+	 *
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function setId($id) 
+	{
+		if (!is_string($id)) {
+			return false;
+		} else {
+			$this->id = $id;
+			return true;
+		}
+	}
+
+	/**
+	 * Get button id
+	 *
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->id;
     }
 
     /**
