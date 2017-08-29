@@ -392,7 +392,7 @@ class Table
 		if (!empty($this->footer)) {
 			$F = "<tfoot><tr>";
 			foreach ($this->footer as $key => $value) {
-				if (isset($this->footerClass[$value])) {
+				if (isset($this->footerClass[$key])) {
 					$F .= "<td class='".$this->footerClass[$key]."'><strong>$value</strong></td>";
 				}
 				else {
