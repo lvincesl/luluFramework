@@ -105,11 +105,40 @@ class Table
 	/**
 	 * Get table header
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function getHeader()
 	{
 		return $this->header;
+	}
+
+	/**
+	 * Set table footer
+	 *
+	 * @param array $footer
+	 * @return boolean
+	 */
+	public function setFooter($footer) 
+	{
+		if (!is_array($footer)) {
+			return false;
+		} else {
+			$this->clear();
+			foreach ($footer as $key => $value) {
+				array_push($this->footer, $value);
+			}
+			return true;
+		}
+	}
+
+	/**
+	 * Get table footer
+	 *
+	 * @return array
+	 */
+	public function getFooter()
+	{
+		return $this->footer;
 	}
 
 	/**
@@ -142,6 +171,39 @@ class Table
 			return false;
 		} else {
 			return $this->headerClass[$colHeader];
+		}
+	}
+
+	/**
+	 * Set footer class
+	 *
+	 * @param string $colFooter
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function setFooterClass($colFooter, $class) 
+	{
+		if (!is_string($colFooter)) {
+			return false;
+		} elseif (!is_string($class)) {
+			return false;
+		} else {
+			$this->footerClass[$colFooter] = $class;
+			return true;
+		}
+	}
+
+	/**
+	 * Get footer class
+	 *
+	 * @return string
+	 */
+	public function getFooterClass($colFooter)
+	{
+		if (!is_string($colFooter)) {
+			return false;
+		} else {
+			return $this->footerClass[$colFooter];
 		}
 	}
 
@@ -327,7 +389,22 @@ class Table
 		}
 		$B .= "</tbody>";
 
-		return (empty($this->body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table class='table table-condensed table-striped table-hover $class'>".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$H$B</table>");
+		if (!empty($this->footer)) {
+			$F = "<tfoot><tr>";
+			foreach ($this->footer as $key => $value) {
+				if (isset($this->footerClass[$value])) {
+					$H .= "<td class='".$this->footerClass[$value]."'><strong>$value</strong></td>";
+				}
+				else {
+					$H .= "<td><strong>$value</strong></td>";				
+				}
+			}
+			$F .= "</tr></tfoot>";
+		} else {
+			$F = null;
+		}
+
+		return (empty($this->body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table class='table table-condensed table-striped table-hover $class'>".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$H$B$F</table>");
 		//return (empty($this->table_body)?"<div class='text-center'><strong>Aucunes données disponibles</strong></div>":"<table".(strlen($this->table_class)?' class="'.$this->table_class.'"':null).">".($this->caption?'<caption>'.$this->caption.'</caption>':null)."$header$body</table>");
 	}
 	

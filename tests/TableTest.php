@@ -124,6 +124,78 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $t->getHeaderClass("test"));
     }
 
+    public function testSetFooterWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $t = new Table();
+        $t->setFooter();
+    }
+
+    public function testSetHeaderFooterWithGoodValue()
+    {
+        $t = new Table();
+        $this->assertEquals(true, $t->setFooter(array(1, 2, 3)));
+    }
+
+    public function testSetFooterWithBadValue()
+    {
+        $t = new Table();
+        $this->assertEquals(false, $t->setFooter(12));
+    }
+
+    public function testGetFooter()
+    {
+        $t = new Table();
+        $this->assertInternalType('array', $t->getFooter());
+    }
+
+    public function testSetFooterClassWithoutValue1()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $t = new Table();
+        $t->setFooterClass();
+    }
+
+    public function testSetFooterClassWithoutValue2()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $t = new Table();
+        $t->setFooterClass("test");
+    }
+
+    public function testSetFooterClassWithGoodValue()
+    {
+        $t = new Table();
+        $this->assertEquals(true, $t->setFooterClass("test", "active"));
+    }
+
+    public function testSetFooterClassWithBadValue1()
+    {
+        $t = new Table();
+        $this->assertEquals(false, $t->setFooterClass(12, "active"));
+    }
+
+    public function testSetFooterClassWithBadValue2()
+    {
+        $t = new Table();
+        $this->assertEquals(false, $t->setFooterClass("test", 12));
+    }
+
+    public function testGetFooterClassWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $t = new Table();
+        $t->getFooterClass();
+    }
+
+    public function testGetFooterClassWithGoodValue()
+    {
+        $t = new Table();
+        $t->addCol("test");
+        $t->setFooterClass("test", "active");
+        $this->assertInternalType('string', $t->getFooterClass("test"));
+    }
+
     public function testAddRowWithoutValue()
     {
         $this->expectException(TypeError::class);
