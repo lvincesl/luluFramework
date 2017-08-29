@@ -13,15 +13,41 @@ class Alert
     const LIGHT     = 6;
     const DARK      = 6;
 
+    private $id;
     private $value;
     private $type;
     private $dismiss;
 
     public function __construct($type = Alert::INFO)
     {
+        $this->id       = null;
         $this->value    = 0;
         $this->type     = $type;
         $this->dismiss  = false;
+    }
+
+    /**
+     * Set Alert id
+     *
+     * @param string $id
+     * @return boolean
+     */
+    public function setId($id) {
+        if (!is_string($id)) {
+            return false;
+        } else {
+            $this->id = $id;
+            return true;
+        }
+    }
+
+    /**
+     * Ged Alert id
+     *
+     * @return string
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**
@@ -132,6 +158,6 @@ class Alert
             $dismiss_code = null;
         }
 
-        return "<div class='alert $class".($this->dismiss?' alert-dismissable':null)."'>$dismiss_code{$this->value}</div>";
+        return "<div ".($this->id?"id='{$this->id}' ":null)."class='alert $class".($this->dismiss?' alert-dismissable':null)."'>$dismiss_code{$this->value}</div>";
     }
 }

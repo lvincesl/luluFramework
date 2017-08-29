@@ -5,14 +5,6 @@ use \Luluframework\Client\View\Alert;
 
 class AlertTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGet()
-    {
-        $a = new Alert();
-        $this->assertEquals(null, $a->get());
-
-        $a->set("12");
-        $this->assertInternalType('string', $a->get());
-    }
 
     public function testSetWithoutValue()
     {
@@ -31,6 +23,41 @@ class AlertTest extends \PHPUnit\Framework\TestCase
     {
         $a = new Alert();
         $this->assertEquals(false, $a->set(12));
+    }
+
+    public function testGet() {
+        $a = new Alert();
+        $this->assertEquals(null, $a->get());
+
+        $a->set("12");
+        $this->assertInternalType('string', $a->get());
+    }
+
+    public function testSetIdWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $a = new Alert();
+        $a->setId();
+    }
+
+    public function testSetIdWithGoodValue()
+    {
+        $a = new Alert();
+        $this->assertEquals(true, $a->setId("12"));
+    }
+
+    public function testSetIdWithBadValue()
+    {
+        $a = new Alert();
+        $this->assertEquals(false, $a->setId(12));
+    }
+
+    public function testGetId() {
+        $a = new Alert();
+        $this->assertEquals(null, $a->getId());
+
+        $a->setId("12");
+        $this->assertInternalType('string', $a->getId());
     }
 
     public function testDismissWithoutValue()
