@@ -94,7 +94,7 @@ class Table
 		if (!is_array($header)) {
 			return false;
 		} else {
-			$this->clear();
+			$this->header = array();
 			foreach ($header as $key => $value) {
 				array_push($this->header, $value);
 			}
@@ -123,10 +123,7 @@ class Table
 		if (!is_array($footer)) {
 			return false;
 		} else {
-			$this->clear();
-			foreach ($footer as $key => $value) {
-				array_push($this->footer, $value);
-			}
+			$this->footer = $footer;
 			return true;
 		}
 	}
