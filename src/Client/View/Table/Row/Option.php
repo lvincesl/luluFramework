@@ -79,7 +79,7 @@ class Option
     {
         switch ($this->type) {
             case self::VIEW:
-                return "<a href='#'  data-toggle='tooltip' title='View' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ view : \"{$this->rowId}\"});'><i class='fa fa-info' aria-hidden='true'></i></a>";
+                return "<a href='#'  data-toggle='tooltip' title='View' class='uk-button uk-button-small {$this->class}' role='button' onclick='$.redirect(\"{$this->link}\",{ view : \"{$this->rowId}\"});'><i class='fa fa-search' aria-hidden='true'></i></a>";
                 break;
 
             case self::EDIT:
