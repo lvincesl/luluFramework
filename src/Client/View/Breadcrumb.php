@@ -72,7 +72,7 @@ class Breadcrumb
 	public function html() 
 	{
 		$breadcrumb_html = '<ol class="breadcrumb">';
-		$this->breadcrumb_array["Accueil"] = Application::get_document_root();
+		$this->breadcrumb_array["Accueil"] = "/";
 		$i=0;
 		foreach ($this->breadcrumb_array as $text => $link) {
 			$breadcrumb_html .= "<li class='breadcrumb-item ".(is_null($link)?'active':null)."'>".($i==0?"Vous êtes ici : ":null).(is_null($link)?"<span href=\"#\">$text</span>":"<a href=\"$link\">$text</a>")."</li>";
