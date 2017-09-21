@@ -246,6 +246,62 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('array', $r->getCellsClass());
     }
 
+    public function testSetCellsColspanWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $r = new Row("7");
+        $r->setCellsColspan();
+    }
+
+    public function testSetCellsColspanWithGoodValue()
+    {
+        $r = new Row("7");
+        $this->assertEquals(true, $r->setCellsColspan(array("test" => 3)));
+    }
+
+    public function testSetCellsColspanWithBadValue()
+    {
+        $r = new Row("7");
+        $this->assertEquals(false, $r->setCellsColspan(12));
+    }
+
+    public function testGetCellsColspan()
+    {
+        $r = new Row("7");
+        $this->assertEquals(null, $r->getCellsColspan());
+
+        $r->setCellsColspan(array("test" => 2));
+        $this->assertInternalType('array', $r->getCellsColspan());
+    }
+
+    public function testSetCellsRowspanWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $r = new Row("7");
+        $r->setCellsRowspan();
+    }
+
+    public function testSetCellsRowspanWithGoodValue()
+    {
+        $r = new Row("7");
+        $this->assertEquals(true, $r->setCellsRowspan(array("test" => 2)));
+    }
+
+    public function testSetCellsRowspanWithBadValue()
+    {
+        $r = new Row("7");
+        $this->assertEquals(false, $r->setCellsRowspan(12));
+    }
+
+    public function testGetCellsRowspan()
+    {
+        $r = new Row("7");
+        $this->assertEquals(null, $r->getCellsRowspan());
+
+        $r->setCellsRowspan(array("test" => 2));
+        $this->assertInternalType('array', $r->getCellsRowspan());
+    }
+
     public function testSetCollapseIdWithoutValue()
     {
         $this->expectException(\PHPUnit\Framework\Error\Error::class);

@@ -13,6 +13,8 @@ class Row {
 	private $lineNumber;
 	private $class;
 	private $cellsClass;
+	private $cellsColspan;
+	private $cellsRowspan;
 	private $hasCheckbox;
 
 
@@ -33,6 +35,8 @@ class Row {
 			$this->lineNumber 	= null;
 			$this->class 		= null;
 			$this->cellsClass   = null;
+			$this->cellsColspan = null;
+			$this->cellsRowspan = null;
 			$this->hasCheckbox 	= false;
 		}
 	}
@@ -247,6 +251,58 @@ class Row {
 	}
 
 	/**
+	 * Set cells colspan
+	 *
+	 * @param array $colspan
+	 * @return boolean
+	 */
+	public function setCellsColspan($colspan)
+	{
+		if (!is_array($colspan)) {
+			return false;
+		} else {
+			$this->cellsColspan = $colspan;
+			return true;
+		}
+	}
+
+	/**
+	 * Get cells colspan
+	 *
+	 * @return void
+	 */
+	public function getCellsColspan()
+	{
+		return $this->cellsColspan;
+	}
+
+	/**
+	 * Set cells rowspan
+	 *
+	 * @param string $rowspan
+	 * @return boolean
+	 */
+	public function setCellsRowspan($rowspan)
+	{
+		if (!is_array($rowspan)) {
+			return false;
+		} else {
+			$this->cellsRowspan = $rowspan;
+			return true;
+		}
+	}
+
+	/**
+	 * Get cells rowspan
+	 *
+	 * @return void
+	 */
+	public function getCellsRowspan()
+	{
+		return $this->cellsRowspan;
+	}
+
+	/**
 	 * Set collapse id
 	 *
 	 * @param string $id
@@ -287,7 +343,7 @@ class Row {
 							(is_null($this->lineNumber)?null:"<th scope='row'>{$this->lineNumber}</th>");
 		
 		foreach ($this->cells as $key => $value) {
-			$r .= "<td ".(isset($this->cellsClass[$key])?"class='{$this->cellsClass[$key]}'":null).">$value</td>";
+			$r .= "<td ".(isset($this->cellsClass[$key])?"class='{$this->cellsClass[$key]}'":null).(isset($this->cellsColspan[$key])?" colspan='{$this->cellsColspan[$key]}'":null).(isset($this->cellsColspan[$key])?" rowspan='{$this->cellsColspan[$key]}'":null).">$value</td>";
 		}
 
 		/* Inserting options */
