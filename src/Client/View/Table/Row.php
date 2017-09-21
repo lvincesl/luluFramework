@@ -343,7 +343,7 @@ class Row {
 							(is_null($this->lineNumber)?null:"<th scope='row'>{$this->lineNumber}</th>");
 		
 		foreach ($this->cells as $key => $value) {
-			$r .= "<td ".(isset($this->cellsClass[$key])?"class='{$this->cellsClass[$key]}'":null).(isset($this->cellsColspan[$key])?" colspan='{$this->cellsColspan[$key]}'":null).(isset($this->cellsColspan[$key])?" rowspan='{$this->cellsColspan[$key]}'":null).">$value</td>";
+			$r .= "<td ".(isset($this->cellsClass[$key])?"class='{$this->cellsClass[$key]}'":null).(isset($this->cellsColspan[$key])?" colspan='{$this->cellsColspan[$key]}'":null).(isset($this->cellsRowspan[$key])?" rowspan='{$this->cellsRowspan[$key]}'":null).">$value</td>";
 		}
 
 		/* Inserting options */
