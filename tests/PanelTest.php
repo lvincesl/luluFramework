@@ -225,6 +225,34 @@ class PanelTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $p->getFooterClass());
     }
 
+    public function testSetRefreshWidgetVisibleWithoutValue()
+    {
+        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $p = new Panel();
+        $p->setRefreshWidgetVisible();
+    }
+
+    public function testSetRefreshWidgetVisibleWithGoodValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(true, $p->setRefreshWidgetVisible(true));
+    }
+
+    public function testSetRefreshWidgetVisibleWithBadValue()
+    {
+        $p = new Panel();
+        $this->assertEquals(false, $p->setRefreshWidgetVisible(12));
+    }
+
+    public function testGetRefreshWidgetVisibleClass()
+    {
+        $p = new Panel();
+        $this->assertEquals(false, $p->getRefreshWidgetVisible());
+
+        $p->setRefreshWidgetVisible(true);
+        $this->assertInternalType('boolean', $p->getRefreshWidgetVisible());
+    }
+
     public function testHtml()
     {
         $p = new Panel();

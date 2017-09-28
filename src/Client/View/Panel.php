@@ -19,6 +19,7 @@ class Panel
     private $headerClass;
     private $bodyClass;
     private $footerClass;
+    private $refreshWidgetVisible;
 
     public function __construct()
     {
@@ -30,6 +31,7 @@ class Panel
         $this->headerClass  = null;
         $this->bodyClass    = null;
         $this->footerClass  = null;
+        $this->refreshWidgetVisible = false;
     }
 
     /**
@@ -246,6 +248,32 @@ class Panel
     {
         return $this->footerClass;
     }
+
+    /**
+     * Set the refresh widget visible or not
+     *
+     * @param boolean $boolean
+     * @return boolean
+     */
+    public function setRefreshWidgetVisible($boolean)
+    {
+        if (!is_bool($boolean)) {
+            return false;
+        } else {
+            $this->refreshWidgetVisible = $boolean;
+            return true;
+        }
+    }
+
+    /**
+     * Get RefreshWidgetVisible value
+     *
+     * @return boolean
+     */
+    public function getRefreshWidgetVisible()
+    {
+        return $this->refreshWidgetVisible;
+    }
     
     /**
      * Return the panem html source code
@@ -255,7 +283,14 @@ class Panel
     public function html()
     {
         $typeClass = null;
+        $refreshWidget = null;
         
+        if ($this->refreshWidgetVisible) {
+            $refreshWidget = "<a id='panel-refresh-widget' class='pull-right' href='#'><span class='fa fa-refresh'></span></a>";
+        } else {
+            $refreshWidget = null;
+        }
+
         switch ($this->type) {
             case Panel::DEFAULT:
                 $typeClass = "panel-default";
@@ -288,7 +323,7 @@ class Panel
 
         return "\n
                 <div class='panel $typeClass {$this->class}'>\n
-                    <div class='panel-heading {$this->headerClass}'>{$this->header}</div>\n
+                    <div class='panel-heading {$this->headerClass}'>$refreshWidget{$this->header}</div>\n
                     <div class='panel-body {$this->bodyClass}'>{$this->body}</div>\n
                     <div class='panel-footer {$this->footerClass}'>{$this->footer}</div>\n
                 </div>\n";
