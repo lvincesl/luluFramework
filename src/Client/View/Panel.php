@@ -276,7 +276,7 @@ class Panel
     }
     
     /**
-     * Return the panem html source code
+     * Return the panel html source code
      *
      * @return string
      */
@@ -286,7 +286,7 @@ class Panel
         $refreshWidget = null;
 
         if ($this->refreshWidgetVisible) {
-            $refreshWidget = "<a id='panel-refresh-widget' class='pull-right' href='#' data-togle='tooltip' title='Refresh'><span class='fa fa-refresh'></span></a>";
+            $refreshWidget = "<a id='panel-refresh-widget' class='pull-right' href='#' data-toggle='tooltip' title='Refresh'><span class='fa fa-refresh'></span></a>";
         } else {
             $refreshWidget = null;
         }
