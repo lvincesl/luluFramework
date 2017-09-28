@@ -284,9 +284,9 @@ class Panel
     {
         $typeClass = null;
         $refreshWidget = null;
-        
+
         if ($this->refreshWidgetVisible) {
-            $refreshWidget = "<a id='panel-refresh-widget' class='pull-right' href='#'><span class='fa fa-refresh'></span></a>";
+            $refreshWidget = "<a id='panel-refresh-widget' class='pull-right' href='#' data-togle='tooltip' title='Refresh'><span class='fa fa-refresh'></span></a>";
         } else {
             $refreshWidget = null;
         }
