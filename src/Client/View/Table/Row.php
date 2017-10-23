@@ -347,11 +347,14 @@ class Row {
 		}
 
 		/* Inserting options */
-		$r .= "<td class='uk-text-right uk-text-nowrap'>";
-		foreach ($this->options as $option) {
-			$r .= $option->html();
+		if (count($this->options)) {
+			$r .= "<td class='uk-text-right uk-text-nowrap'>";
+			foreach ($this->options as $option) {
+				$r .= $option->html();
+			}
+			$r .= "</td>";
 		}
-
+		
 		return "$r</tr>";
 	}
 
