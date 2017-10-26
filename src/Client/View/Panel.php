@@ -321,11 +321,12 @@ class Panel
                 break;
         }
 
+        $H = $this->header?"<div class='panel-heading {$this->headerClass}'>$refreshWidget{$this->header}</div>\n":null;
+        $F = $this->footer?"<div class='panel-footer {$this->footerClass}'>{$this->footer}</div>\n":null;
+
         return "\n
                 <div class='panel $typeClass {$this->class}'>\n
-                    <div class='panel-heading {$this->headerClass}'>$refreshWidget{$this->header}</div>\n
-                    <div class='panel-body {$this->bodyClass}'>{$this->body}</div>\n
-                    <div class='panel-footer {$this->footerClass}'>{$this->footer}</div>\n
+                    $H<div class='panel-body {$this->bodyClass}'>{$this->body}</div>\n$F
                 </div>\n";
     }
 }
