@@ -39,7 +39,7 @@ class OptionTest extends \PHPUnit\Framework\TestCase
 
     public function testSetLinkWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $o = new Option(Option::VIEW, "7");
         $o->setLink();
     }

@@ -22,7 +22,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testSetPathWihoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $v = new View();
         $v->setPath();
     }
@@ -50,7 +50,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
 
     public function testUpdateWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $v = new View(__DIR__."/ViewTest.php");
         $v->update();
     }

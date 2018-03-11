@@ -7,7 +7,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 {
     public function testAddColWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->addCol();
     }
@@ -26,7 +26,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCaptionWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setCaption();
     }
@@ -54,7 +54,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetHeaderWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setHeader();
     }
@@ -79,14 +79,14 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetHeaderClassWithoutValue1()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setHeaderClass();
     }
 
     public function testSetHeaderClassWithoutValue2()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setHeaderClass("test");
     }
@@ -111,7 +111,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testGetHeaderClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->getHeaderClass();
     }
@@ -126,7 +126,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetFooterWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setFooter();
     }
@@ -151,14 +151,14 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetFooterClassWithoutValue1()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setFooterClass();
     }
 
     public function testSetFooterClassWithoutValue2()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setFooterClass("test");
     }
@@ -183,7 +183,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testGetFooterClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->getFooterClass();
     }
@@ -236,7 +236,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetFirstLineNumberWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setFirstLineNumber();
     }
@@ -264,7 +264,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCollapsedIndexWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setCollapsedIndex();
     }
@@ -304,7 +304,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testSetClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $t = new Table();
         $t->setClass();
     }

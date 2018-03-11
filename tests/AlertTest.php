@@ -8,7 +8,7 @@ class AlertTest extends \PHPUnit\Framework\TestCase
 
     public function testSetWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $a = new Alert();
         $a->set();
     }
@@ -35,7 +35,7 @@ class AlertTest extends \PHPUnit\Framework\TestCase
 
     public function testSetIdWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $a = new Alert();
         $a->setId();
     }
@@ -62,7 +62,7 @@ class AlertTest extends \PHPUnit\Framework\TestCase
 
     public function testDismissWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $a = new Alert();
         $a->dismiss();
     }

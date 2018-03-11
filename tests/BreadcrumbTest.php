@@ -11,7 +11,7 @@ class BreadcrumbTest extends \PHPUnit\Framework\TestCase
 
     public function testSetWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         
         $b = new \Luluframework\Client\View\Breadcrumb();
         $b->set();
@@ -37,7 +37,7 @@ class BreadcrumbTest extends \PHPUnit\Framework\TestCase
 
     public function testAddWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         
         $b = new \Luluframework\Client\View\Breadcrumb();
         $b->add();

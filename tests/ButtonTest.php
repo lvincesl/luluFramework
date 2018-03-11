@@ -18,7 +18,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetTextWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setText();
     }
@@ -46,7 +46,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetTooltipWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setTooltip();
     }
@@ -74,7 +74,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setClass();
     }
@@ -93,7 +93,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetTypeWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setType();
     }
@@ -130,7 +130,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetModalIdWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setModalId();
     }
@@ -158,7 +158,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetIdWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setId();
     }
@@ -186,7 +186,7 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
 
     public function testSetOnclickWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $b = new Button();
         $b->setModalId();
     }

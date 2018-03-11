@@ -6,7 +6,7 @@ class ListGroupTest extends \PHPUnit\Framework\TestCase
 {
     public function testAddWithoutItem()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
 
         $listgroup = new ListGroup();
         $listgroup->add();
@@ -27,7 +27,7 @@ class ListGroupTest extends \PHPUnit\Framework\TestCase
 
     public function testSetWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
 
         $l = new ListGroup();
         $l->set();

@@ -6,7 +6,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 {
     public function testSetHeaderWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setHeader();
     }
@@ -34,7 +34,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetBodyWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setBody();
     }
@@ -62,7 +62,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetFooterWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setFooter();
     }
@@ -90,7 +90,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetTypeWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setType();
     }
@@ -115,7 +115,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
     
     public function testSetClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setClass();
     }
@@ -143,7 +143,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetHeaderClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setHeaderClass();
     }
@@ -171,7 +171,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetBodyClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setBodyClass();
     }
@@ -199,7 +199,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetFooterClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setFooterClass();
     }
@@ -227,7 +227,7 @@ class PanelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetRefreshWidgetVisibleWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $p = new Panel();
         $p->setRefreshWidgetVisible();
     }

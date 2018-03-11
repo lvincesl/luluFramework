@@ -12,7 +12,7 @@ class ModalTest extends \PHPUnit\Framework\TestCase
 
     public function testSetIdWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $m = new Modal('mymodal');
         $m->setId();
     }
@@ -37,7 +37,7 @@ class ModalTest extends \PHPUnit\Framework\TestCase
 
     public function testCloseWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $m = new Modal('mymodal');
         $m->close();
     }
@@ -56,7 +56,7 @@ class ModalTest extends \PHPUnit\Framework\TestCase
 
     public function testSetTitleWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $m = new Modal('mymodal');
         $m->setTitle();
     }
@@ -84,7 +84,7 @@ class ModalTest extends \PHPUnit\Framework\TestCase
 
     public function testSetBodyWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $m = new Modal('mymodal');
         $m->setBody();
     }
@@ -112,7 +112,7 @@ class ModalTest extends \PHPUnit\Framework\TestCase
 
     public function testSetFooterWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $m = new Modal('mymodal');
         $m->setFooter();
     }
@@ -140,7 +140,7 @@ class ModalTest extends \PHPUnit\Framework\TestCase
 
     public function testSetClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $m = new Modal('mymodal');
         $m->setClass();
     }

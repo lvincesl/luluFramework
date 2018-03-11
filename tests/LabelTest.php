@@ -16,7 +16,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
 
     public function testSetWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $l = new Label();
         $l->set();
     }

@@ -7,13 +7,13 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructorWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row();
     }
 
     public function testAddCellWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->addCell();
     }
@@ -32,7 +32,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testDelCellWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->delCell();
     }
@@ -53,7 +53,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testGetCellWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->delCell();
     }
@@ -74,7 +74,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCellsWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setCells();
     }
@@ -99,7 +99,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetIdWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setId();
     }
@@ -145,7 +145,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetLineNumberWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setLineNumber();
     }
@@ -173,7 +173,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testHasCheckboxWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->hasCheckbox();
     }
@@ -192,7 +192,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setClass();
     }
@@ -220,7 +220,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCellsClassWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setCellsClass();
     }
@@ -248,7 +248,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCellsColspanWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setCellsColspan();
     }
@@ -276,7 +276,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCellsRowspanWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setCellsRowspan();
     }
@@ -304,7 +304,7 @@ class TableRowTest extends \PHPUnit\Framework\TestCase
 
     public function testSetCollapseIdWithoutValue()
     {
-        $this->expectException(\PHPUnit\Framework\Error\Error::class);
+        $this->expectException(ArgumentCountError::class);
         $r = new Row("7");
         $r->setCollapseId();
     }
