@@ -30,8 +30,6 @@ class Application
 
 	}
 
-
-
 	public static function get_authentication_panel() {
 		return self::$authentication_panel;
 	}
