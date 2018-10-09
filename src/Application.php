@@ -10,7 +10,8 @@ use Luluframework\Client\View\Breadcrumb;
 
 class Application
 {
-
+    protected $htmlFramework = HtmlFramework::BOOTSTRAP_3;
+    protected $htmlIconPack = HtmlIconPack::FONT_AWESOME;
 	protected static $view 			= null;
 	protected static $breadcrumb 	= null;
 	protected static $css 			= null;
@@ -29,6 +30,24 @@ class Application
 	{
 
 	}
+
+    /**
+     * Define the HTML Framework to use
+     * @param HtmlFramework $htmlFramework
+     */
+    public function useHtmlFramework(HtmlFramework $htmlFramework)
+    {
+        $this->htmlFramework = $htmlFramework::isValidValue() ? $htmlFramework : HtmlFramework::BOOTSTRAP_3;
+    }
+
+    /**
+     * Define the HTML Icon Pack to use
+     * @param HtmlIconPack $htmlIconPack
+     */
+    public function useHtmlIconPack(HtmlIconPack $htmlIconPack)
+    {
+        $this->htmlIconPack = $htmlIconPack::isValidValue() ? $htmlIconPack : HtmlIconPack::FONT_AWESOME;
+    }
 
 	public static function get_authentication_panel() {
 		return self::$authentication_panel;
