@@ -4,3 +4,6 @@ vendor/
 
 # Visual Studio Code
 .vscode
+
+# PHPStorm
+.idea

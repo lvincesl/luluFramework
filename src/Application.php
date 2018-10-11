@@ -8,28 +8,22 @@ use Luluframework\Server\Router;
 use Luluframework\Client\View\Breadcrumb;
 
 
-class Application
+abstract class Application
 {
     protected $htmlFramework = HtmlFramework::BOOTSTRAP_3;
     protected $htmlIconPack = HtmlIconPack::FONT_AWESOME;
-	protected static $view 			= null;
-	protected static $breadcrumb 	= null;
-	protected static $css 			= null;
-	protected static $js 			= null;
-	protected static $onload_script = null;
-	protected static $document_root = null;
-	protected static $authentication_panel 	= null;
+	protected $mainView 	= null;
+	protected $breadcrumb 	= null;
+	protected $css 			= null;
+	protected $javascript	= null;
+	protected $onloadScript = null;
+	protected $documentRoot = null;
+
+    public static $pdo 		= null;
+    public static $cfg 		= null;
 	
 	protected $routes 	= null;
 	protected $url 		= null;
-
-	public static $model 			= null;
-	public static $config 			= null;
-
-	public function __construct()
-	{
-
-	}
 
     /**
      * Define the HTML Framework to use
@@ -49,11 +43,8 @@ class Application
         $this->htmlIconPack = $htmlIconPack::isValidValue() ? $htmlIconPack : HtmlIconPack::FONT_AWESOME;
     }
 
-	public static function get_authentication_panel() {
-		return self::$authentication_panel;
-	}
-	
-	public static function routing($routes_map_file=null) {
+	public function routing($routes_map_file=null)
+    {
 		// create a server request object
 		$request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
 			$_SERVER,
@@ -101,7 +92,7 @@ class Application
 	 * @date 20/09/2013
 	 * @return bool
 	 */
-	public static function session_stop() {
+	public function session_stop() {
 		$log = new Logger('self::session_stop()');
 		$log->pushHandler(new StreamHandler('log/pem.log', Logger::DEBUG));				
 		$log->info("User logged out", array('username' => $_SESSION['user_name'], 'role' => $_SESSION['user_role']));
@@ -111,24 +102,26 @@ class Application
 	}
 
 	/**
-	 * Définittion de la VUE
+	 * Define the main View for the application
 	 *
 	 * @param string $html_path
 	 * @return void
 	 */
-	public static function set_view($html_path) {
-		self::$view = new lvincesl\html\Html_template($html_path);
+	public function setMainVew($html_path)
+    {
+		$this->mainView = new lvincesl\html\Html_template($html_path);
 	}
 
 	/**
-	 * Mise à jour de la VUE
+	 * Update the main VIEW for the application
 	 *
 	 * @param string $tag
 	 * @param string $value
 	 * @return void
 	 */
-	public static function update_view($tag, $value) {
-		self::$view->set($tag, $value);
+	public function updateMainView($tag, $value)
+    {
+        $this->mainView->set($tag, $value);
 	}
 
 	/**
@@ -138,139 +131,287 @@ class Application
 	 * @param string $link
 	 * @return void
 	 */
-	public static function breadcrumb_add($name, $link = null) {
+	public function breadcrumbAdd($name, $link = null)
+    {
 		if (!is_object(self::$breadcrumb)) self::$breadcrumb = new vf_breadcrumb();
 		self::$breadcrumb->add_Item($name, $link);
-	} 
-
-	public static function set_config($config_file) {
-		self::$config = parse_ini_file($config_file);
 	}
 
-	/**
-	 * Démmare le site web
-	 *
-	 * @return void
-	 */
-	public static function start() {
-		self::$model = null;
-		if (!is_object(self::$breadcrumb)) self::$breadcrumb = new vf_breadcrumb();
-		self::update_view('PAGE_CONTENT'      	 , $GLOBALS['response']->getBody());
-		self::update_view('BREADCRUMB'            , self::$breadcrumb->get_Html());
-		self::update_view('ATTACHED_CSS'          , self::get_attached_css());
-		self::update_view('ATTACHED_JS'           , self::get_attached_js());
-		self::update_view('ATTACHED_ONLOAD_SCRIPT', self::get_attached_onload_script());
-		self::update_view('DOCUMENT_ROOT'         , self::$document_root);
+    /**
+     * Add a CSS file to the application
+     * @param $cssFile
+     */
+    public function AddCss($cssFile)
+    {
+        $this->css .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssFile\">\n";
+    }
 
-		// emit the response
-		foreach ($GLOBALS['response']->getHeaders() as $name => $values) {
-			foreach ($values as $value) {
-				header(sprintf('%s: %s', $name, $value), false);
-			}
-		}
-		self::$view->show();
+    /**
+     * Get the CSS definition block
+     * @return string
+     */
+    public function getCss()
+    {
+        return $this->css;
+    }
+
+    /**
+     * Add a JAVASCRIPT file to the application
+     * @param $jsFile
+     */
+    public function addJavascript($jsFile)
+    {
+        $this->javascript .= "<script src=\"$jsFile\"></script>\n";
+    }
+
+    /**
+     * Get the JAVASCRIPT definition block
+     * @return string
+     */
+    public function getJavascript()
+    {
+        return self::$javascript;
+    }
+
+    /**
+     * Add a onload script to the application
+     * @param $script
+     */
+    public function addOnloadScript($script)
+    {
+        $this->onloadScript .= "$script\n";
+    }
+
+    /**
+     * Get the onload script definition block
+     * @return string
+     */
+    public function getOnloadScript()
+    {
+        return "<script>\n$(document).ready(function(){\n{$this->onloadScript}});\n</script>";
+    }
+
+    /**
+     * Set the document root for the application
+     * @param $value
+     */
+    public function setDocumentRoot($value)
+    {
+        $this->documentRoot = $value;
+    }
+
+    /**
+     * Get the document root for the application
+     * @return string
+     */
+    public function getDocumentRoot()
+    {
+        return $this->documentRoot;
+    }
+
+    /**
+     * Set the PHP Database Object
+     * @param $dbHost
+     * @param $dbName
+     * @param $dbUser
+     * @param $dbPassword
+     */
+    public function setPdo($dbHost, $dbName, $dbUser, $dbPassword)
+    {
+        try {
+            $strConnection = "mysql:host=$dbHost;dbname=$dbName";
+            $arrExtraParam= array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+            self::$model = new PDO($strConnection, $dbUser, $dbPassword, $arrExtraParam);
+            self::$model->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        catch(PDOException $e) {
+            $msg = 'ERREUR PDO dans ' . $e->getFile() . ' L.' . $e->getLine() . ' : ' . $e->getMessage();
+            die($msg);
+        }
+    }
+
+    /**
+     * Set the config properties for the application
+     * @param $cfgFile
+     */
+    public function setCfg($cfgFile)
+    {
+		self::$cfg = parse_ini_file($cfgFile);
 	}
 
-	/**
-	 * Définit le MODELE
-	 *
-	 * @param string $db_host
-	 * @param string $db_name
-	 * @param string $db_user
-	 * @param string $db_password
-	 * @return void
-	 */
-	public static function set_modele($db_host, $db_name, $db_user, $db_password) {
-		try {
-		    $strConnection = "mysql:host=$db_host;dbname=$db_name";
-		    $arrExtraParam= array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-		    self::$model = new PDO($strConnection, $db_user, $db_password, $arrExtraParam);
-		    self::$model->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}
-		catch(PDOException $e) {
-		    $msg = 'ERREUR PDO dans ' . $e->getFile() . ' L.' . $e->getLine() . ' : ' . $e->getMessage();
-		    die($msg);
-		}
-	}
+    /**
+     * Display the application
+     */
+    public function display()
+    {
+        self::$pdo = null;
+        if (!is_object(self::$breadcrumb)) $this->breadcrumb = new vf_breadcrumb();
+        self::update_view('PAGE_CONTENT'      	  , $GLOBALS['response']->getBody());
+        self::update_view('BREADCRUMB'            , $this->breadcrumb->get_Html());
+        self::update_view('ATTACHED_CSS'          , $this->getCss());
+        self::update_view('ATTACHED_JS'           , $this->getJavascript());
+        self::update_view('ATTACHED_ONLOAD_SCRIPT', $this->getOnloadScript());
+        self::update_view('DOCUMENT_ROOT'         , $this->getDocumentRoot());
 
-	public static function set_document_root($value) {
-		self::$document_root = $value;
-	}
+        // emit the response
+        foreach ($GLOBALS['response']->getHeaders() as $name => $values) {
+            foreach ($values as $value) {
+                header(sprintf('%s: %s', $name, $value), false);
+            }
+        }
+        $this->mainView->show();
+    }
 
-	public static function get_document_root() {
-		return self::$document_root;
-	}
+    /**
+     * Get a HTML date picker
+     *
+     * @param string $name
+     * @param string $default_value
+     * @param string $placeholder
+     * @param string $tooltip
+     * @return void
+     */
+    public static function getDatePicker($name, $default_value, $placeholder="Date", $tooltip="Choisissez une date")
+    {
+        return "
+		<div class='input-group date' data-provide='datepicker' data-date-format='dd/mm/yyyy' id='$name'>
+			<input type='text' data-toggle='tooltip' title=\"$tooltip\" placeholder=\"$placeholder\" class='form-control input-sm' name='$name' value='".(is_null($default_value)?'':implode('/', array(explode('-', $default_value)[2], explode('-', $default_value)[1], explode('-', $default_value)[0])))."'>
+			<div class='input-group-addon input-sm'>
+				<i class='fa fa-calendar' aria-hidden='true'></i>
+			</div>
+		</div>";
+    }
 
-	/**
-	 * Retourne une pagination HTML
-	 *
-	 * @param string $link         URL à lancer lors d'un clic sur la pagination
-	 * @param string $current_page Numéro de page par actuel
-	 * @param string $total_page   Nombre total de page
-	 *
-	 * @author Lionel Vinceslas
-	 * @date 26/09/2013
-	 * @return string
-	 */
-	public static function get_pagination($link, $current_page, $total_page)
-	{
-	    if ($total_page>1) {
-	        $amplitude = 5;
-	        $borne_inf = max(1, $current_page-$amplitude);
-	        $borne_sup = min($total_page, $current_page+$amplitude+($borne_inf-($current_page-$amplitude)));
-	        $pagination="<ul class='pagination pagination-sm'>";
+    /**
+     * Get a HTML year picker
+     *
+     * @param string $name
+     * @param string $default_value
+     * @param string $placeholder
+     * @param string $tooltip
+     * @return void
+     */
+    public static function getYearPicker($name, $default_value, $placeholder="Année", $tooltip="Choisissez une année")
+    {
+        return "
+		<div class='input-group date' data-provide='datepicker' data-date-format='yyyy' id='$name'>
+			<input type='text' data-toggle='tooltip' title=\"$tooltip\" placeholder=\"$placeholder\" class='form-control input-sm' name='$name' value='$default_value'>
+			<div class='input-group-addon input-sm'>
+				<i class='fa fa-calendar' aria-hidden='true'></i>
+			</div>
+		</div>";
+    }
 
-	        if ($current_page == 1) {
-	        	$pagination .= "<li class='disabled'><span data-toggle='tooltip' title='Première page'><i class='fa fa-angle-double-left' aria-hidden='true'></i></span></li>
+    /**
+     * Get a HTML combo box
+     *
+     * @param string $name
+     * @param string $default_value
+     * @param string $placeholder
+     * @param string $tooltip
+     * @param mixed  $data_source
+     * @return void
+     */
+    public static function getComboBox($name, $default_value, $placeholder=null, $tooltip=null, $data_source=null)
+    {
+        if (is_string($data_source)) {
+            $data = self::$model->query($data_source)->fetchAll();
+        }
+        elseif (is_array($data_source)) {
+            $data = $data_source;
+        }
+        else {
+            $data = null;
+        }
+
+        $combo_box = "<select class='js-example-basic-single' id='$name' name='$name'><option></option>\n";
+
+        foreach ($data as $item) {
+            $combo_box .="<option value='".$item['id']."' ".(isset($item['tooltip'])?"title='".$item['tooltip']."'":null)." ".(($default_value==$item['id'])?"selected":"").">".$item['value']."</option>\n";
+        }
+
+        self::attach_onload_script("$(\"#$name\").select2({\n
+														placeholder: \"$placeholder\",\n
+														width: '100%',\n
+														dropdownAutoWidth: true,\n
+														allowClear: true\n
+													});\n");
+
+        return $combo_box."</select>";
+    }
+
+    /**
+     * Get a html pager
+     * @param $link
+     * @param $current_page
+     * @param $total_page
+     * @return string
+     */
+    public static function getPager($link, $current_page, $total_page)
+    {
+        if ($total_page>1) {
+            $amplitude = 5;
+            $borne_inf = max(1, $current_page-$amplitude);
+            $borne_sup = min($total_page, $current_page+$amplitude+($borne_inf-($current_page-$amplitude)));
+            $pagination="<ul class='pagination pagination-sm'>";
+
+            if ($current_page == 1) {
+                $pagination .= "<li class='disabled'><span data-toggle='tooltip' title='Première page'><i class='fa fa-angle-double-left' aria-hidden='true'></i></span></li>
 	        					<li class='disabled'><span data-toggle='tooltip' title='Page précédente'><i class='fa fa-angle-left' aria-hidden='true'></i></span></li>";
-	        }
-	        else {
-	        	$pagination .= "<li><a href='#' onclick='$.redirect(\"$link\",{ page: 1});' data-toggle='tooltip' title='Première page'><i class='fa fa-angle-double-left' aria-hidden='true'></i></a></li>
+            }
+            else {
+                $pagination .= "<li><a href='#' onclick='$.redirect(\"$link\",{ page: 1});' data-toggle='tooltip' title='Première page'><i class='fa fa-angle-double-left' aria-hidden='true'></i></a></li>
 	                            <li><a href='#' onclick='$.redirect(\"$link\",{ page: ".max($current_page-1, 1)."});' data-uk-tooltip title='Page précédente'>
 	                            	<i class='fa fa-angle-left' aria-hidden='true'></i>
 	                            </a></li>\n";
-	        }
+            }
 
-	        for ($i=$borne_inf;$i<=$borne_sup;$i++) {
-	        	if ($current_page==$i) {
-	            	$pagination .= "<li class='active'><span>$i</span></li>\n";
-	        	}
-	        	else {
-	            $pagination .= "<li><a href='#' onclick='$.redirect(\"$link\",{ page: \"$i\"});' data-toggle='tooltip' title='Page $i'>$i</a></li>\n";
-	        	}
-	        }
+            for ($i=$borne_inf;$i<=$borne_sup;$i++) {
+                if ($current_page==$i) {
+                    $pagination .= "<li class='active'><span>$i</span></li>\n";
+                }
+                else {
+                    $pagination .= "<li><a href='#' onclick='$.redirect(\"$link\",{ page: \"$i\"});' data-toggle='tooltip' title='Page $i'>$i</a></li>\n";
+                }
+            }
 
-	       	if ($current_page == $total_page) {
-	       		$pagination .= "<li class='disabled'><span data-toggle='tooltip' title='Page suivante'><i class='fa fa-angle-right' aria-hidden='true'></i></li>
+            if ($current_page == $total_page) {
+                $pagination .= "<li class='disabled'><span data-toggle='tooltip' title='Page suivante'><i class='fa fa-angle-right' aria-hidden='true'></i></li>
 	       						<li class='disabled'><span data-toggle='tooltip' title='Dernière page'><i class='fa fa-angle-double-right' aria-hidden='true'></i></li>";
-	       	}
-	       	else {
-	       		$pagination .= "<li><a href='#' onclick='$.redirect(\"$link\",{ page: ".min($current_page+1, $total_page)."});' data-toggle='tooltip' title='Page suivante'>
+            }
+            else {
+                $pagination .= "<li><a href='#' onclick='$.redirect(\"$link\",{ page: ".min($current_page+1, $total_page)."});' data-toggle='tooltip' title='Page suivante'>
 	       							<i class='fa fa-angle-right' aria-hidden='true'></i></a>
 	                        	</li>
 	                        	<li><a href='#' onclick='$.redirect(\"$link\",{ page: $total_page});' data-toggle='tooltip' title='Dernière page'>
 	                            	<i class='fa fa-angle-double-right' aria-hidden='true'></i></a>
 	                        	</li>";
-	       	}
-	        return  $pagination.'</ul>';
-	    } else return "";
-	}
+            }
+            return  $pagination.'</ul>';
+        } else return "";
+    }
 
-	public static function debug($info) {
-		echo '## DEBUG ## '.$info;
-		exit(0);
-	}
+    /**
+     * Do an emergency exit
+     * @param $info
+     */
+    public static function emergencyExit($info)
+    {
+        echo '## EMERGENCY EXIT ## '.$info;
+        exit(0);
+    }
 
-	public static function get_mysql_date($frenchDate) {
+
+	public function get_mysql_date($frenchDate) {
 		return implode('-', array(explode('/', $frenchDate)[2], explode('/', $frenchDate)[1], explode('/', $frenchDate)[0]));
 	}
 
-	public static function set_message($message_type, $message_text) {
+	public function set_message($message_type, $message_text) {
 		$_SESSION['message']['type'] = $message_type;
 		$_SESSION['message']['text'] = $message_text;
 	}
 
-	public static function get_message() {
+	public function get_message() {
 		if (isset($_SESSION['message'])) {
 			$message = "<div class='alert alert-".$_SESSION['message']['type']."' role='alert'>
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -294,7 +435,7 @@ class Application
 	 * @param string $type
 	 * @return void
 	 */
-	public static function add_filter($filter_id, $data, $placeholder, $all_placeholder = "Tout", $type = "dropdown") {
+	public function add_filter($filter_id, $data, $placeholder, $all_placeholder = "Tout", $type = "dropdown") {
 
 		if (!isset($_SESSION['filters'][$filter_id])) {
 			$_SESSION['filters'][$filter_id]['data'] = $data;
@@ -321,7 +462,7 @@ class Application
 	 * @param string $style
 	 * @return void
 	 */
-	public static function get_filters($array = null, $style='select2') {
+	public function get_filters($array = null, $style='select2') {
 		$filters_id = ($array?$array:array_keys($_SESSION['filters']));
 		$filters_dropdown = null;
 		$filters_datepicker = null;
@@ -391,122 +532,18 @@ class Application
 		return "$filters_dropdown$filters_datepicker";
 	}
 
-	public static function get_filter_clause() {
+	public function get_filter_clause() {
 
 	}
 
-	/**
-	 * Return a HTML date picker
-	 *
-	 * @param string $name
-	 * @param string $default_value
-	 * @param string $placeholder
-	 * @param string $tooltip
-	 * @return void
-	 */
-	public static function get_date_picker($name, $default_value, $placeholder="Date", $tooltip="Choisissez une date") {
-
-		return "
-		<div class='input-group date' data-provide='datepicker' data-date-format='dd/mm/yyyy' id='$name'>
-			<input type='text' data-toggle='tooltip' title=\"$tooltip\" placeholder=\"$placeholder\" class='form-control input-sm' name='$name' value='".(is_null($default_value)?'':implode('/', array(explode('-', $default_value)[2], explode('-', $default_value)[1], explode('-', $default_value)[0])))."'>
-			<div class='input-group-addon input-sm'>
-				<i class='fa fa-calendar' aria-hidden='true'></i>
-			</div>
-		</div>";
-
-	}
-
-	/**
-	 * Return a HTML year picker
-	 *
-	 * @param string $name
-	 * @param string $default_value
-	 * @param string $placeholder
-	 * @param string $tooltip
-	 * @return void
-	 */
-	public static function get_year_picker($name, $default_value, $placeholder="Année", $tooltip="Choisissez une année") {
-
-		return "
-		<div class='input-group date' data-provide='datepicker' data-date-format='yyyy' id='$name'>
-			<input type='text' data-toggle='tooltip' title=\"$tooltip\" placeholder=\"$placeholder\" class='form-control input-sm' name='$name' value='$default_value'>
-			<div class='input-group-addon input-sm'>
-				<i class='fa fa-calendar' aria-hidden='true'></i>
-			</div>
-		</div>";
-
-	}
-
-	/**
-	 * Return a HTML combo box using parameters
-	 *
-	 * @param string $name
-	 * @param string $default_value
-	 * @param string $placeholder
-	 * @param string $tooltip
-	 * @param mixed  $data_source
-	 * @return void
-	 */
-	public static function get_combo_box($name, $default_value, $placeholder=null, $tooltip=null, $data_source=null) {
-		
-		if (is_string($data_source)) {
-			$data = self::$model->query($data_source)->fetchAll();
-		}
-		elseif (is_array($data_source)) {
-			$data = $data_source;
-		}
-		else {
-			$data = null;
-		}
-
-		$combo_box = "<select class='js-example-basic-single' id='$name' name='$name'><option></option>\n";
-
-		foreach ($data as $item) {
-			$combo_box .="<option value='".$item['id']."' ".(isset($item['tooltip'])?"title='".$item['tooltip']."'":null)." ".(($default_value==$item['id'])?"selected":"").">".$item['value']."</option>\n";
-		}
-
-		self::attach_onload_script("$(\"#$name\").select2({\n
-														placeholder: \"$placeholder\",\n
-														width: '100%',\n
-														dropdownAutoWidth: true,\n
-														allowClear: true\n
-													});\n");
-
-		return $combo_box."</select>";
-
-	}
-
-	public static function get_filter_value($filter_id) {
+	public function get_filter_value($filter_id) {
 		return $_SESSION['filters'][$filter_id]['value'];
 	}
 
-	public static function update_filter_value($filter_id, $filter_value) {
+	public function update_filter_value($filter_id, $filter_value) {
 		//debug($filter_value);
 		$_SESSION['filters'][$filter_id]['value'] = $filter_value;
 	}
 	
-	public static function attach_css($css_src) {
-		self::$css .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_src\">\n";
-	}
 
-	public static function get_attached_css() {
-		return self::$css;
-	}
-
-	public static function attach_js($js_src) {
-		self::$js .= "<script src=\"$js_src\"></script>\n";
-	}
-
-	public static function get_attached_js() {
-		return self::$js;
-	}
-
-	public static function attach_onload_script($script) {
-		self::$onload_script .= "$script\n";
-	}
-
-	public static function get_attached_onload_script() {
-		$html = "<script>\n$(document).ready(function(){\n".self::$onload_script."});\n</script>";
-		return $html;
-	}
 }
