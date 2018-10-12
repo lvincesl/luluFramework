@@ -6,6 +6,7 @@ use Monolog\Handler\StreamHandler;
 use Luluframework\Server\Log;
 use Luluframework\Server\Router;
 use Luluframework\Client\View\Breadcrumb;
+use phpDocumentor\Reflection\Types\Integer;
 
 
 abstract class Application
@@ -27,11 +28,17 @@ abstract class Application
 
     /**
      * Define the HTML Framework to use
-     * @param HtmlFramework $htmlFramework
+     * @param integer $htmlFramework
+     * @return bool
      */
-    public function useHtmlFramework(HtmlFramework $htmlFramework)
+    public function useHtmlFramework($htmlFramework)
     {
-        $this->htmlFramework = $htmlFramework::isValidValue() ? $htmlFramework : HtmlFramework::BOOTSTRAP_3;
+        if (HtmlFramework::isValidValue($htmlFramework)) {
+            $this->htmlFramework = $htmlFramework;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
