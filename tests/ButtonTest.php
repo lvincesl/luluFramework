@@ -212,6 +212,34 @@ class ButtonTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $b->getOnclick());
     }
 
+    public function testSetAdditionalPropertiesWithoutValue()
+    {
+        $this->expectException(ArgumentCountError::class);
+        $b = new Button();
+        $b->setAdditionalProperties();
+    }
+
+    public function testSetAdditionalPropertiesWithGoodValue()
+    {
+        $b = new Button();
+        $this->assertEquals(true, $b->setAdditionalProperties("test"));
+    }
+
+    public function testSetAdditionalPropertiesWithBadValue()
+    {
+        $b = new Button();
+        $this->assertEquals(false, $b->setAdditionalProperties(7));
+    }
+
+    public function testGetAdditionalProperties()
+    {
+        $b = new Button();
+        $this->assertEquals(null, $b->getAdditionalProperties());
+
+        $b->setAdditionalProperties("test");
+        $this->assertInternalType('string', $b->getAdditionalProperties());
+    }
+
     public function testHtml()
     {
         $b = new Button();

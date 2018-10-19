@@ -19,8 +19,9 @@ class Button
     private $modalId;
     private $onclick;
     private $id;
+    private $additionalProperties;
 
-    public function __construct($text=null)
+     public function __construct($text=null)
     {
         if (!is_string($text) && !is_null($text)) {
             throw new \Exception("InvalidArgumentException : string expected for 'text' !");
@@ -32,6 +33,7 @@ class Button
             $this->modalId  = null;
             $this->onclick  = null;
             $this->id       = null;
+            $this->additionalProperties = null;
         }
     }
 
@@ -228,6 +230,32 @@ class Button
     }
 
     /**
+     * Set additional properties
+     *
+     * @param $additionalProperties
+     * @return boolean
+     */
+    public function setAdditionalProperties($additionalProperties)
+    {
+        if (!is_string($additionalProperties)) {
+            return false;
+        } else {
+            $this->additionalProperties = $additionalProperties;
+            return true;
+        }
+    }
+
+    /**
+     * Get additional properties
+     *
+     * @return string
+     */
+    public function getAdditionalProperties()
+    {
+        return $this->additionalProperties;
+    }
+
+    /**
      * Return the button html source code
      *
      * @return string
@@ -282,8 +310,9 @@ class Button
             $html .= " onclick=\"{$this->onclick}\"";
         }
 
-        $html .= ">{$this->text}</button>";
+        $html .= "{$this->additionalProperties}>{$this->text}</button>";
         
         return $html;
     }
+
 }
