@@ -310,7 +310,7 @@ class Button
             $html .= " onclick=\"{$this->onclick}\"";
         }
 
-        $html .= "{$this->additionalProperties}>{$this->text}</button>";
+        $html .= " {$this->additionalProperties}>{$this->text}</button>";
         
         return $html;
     }
