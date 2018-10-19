@@ -14,7 +14,7 @@ class Breadcrumb
 	 */
 	public function __construct()
 	{
-		$this->breadcrumb_array = array('Accueil' => Application::get_document_root());
+		$this->breadcrumb_array = array();
 	}
 
 	/**
